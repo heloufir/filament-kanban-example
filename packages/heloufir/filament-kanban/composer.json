@@ -1,0 +1,41 @@
+{
+    "name": "heloufir/filament-kanban",
+    "description": "Filament Kanban Board",
+    "keywords": [
+        "filament",
+        "kanban",
+        "board",
+        "agile"
+    ],
+    "support": {
+        "issues": "https://github.com/heloufir/filament-kanban/issues",
+        "source": "https://github.com/heloufir/filament-kanban"
+    },
+    "homepage": "https://github.com/heloufir/filament-kanban",
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0-stable",
+        "livewire/livewire": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Heloufir\\FilamentKanban\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "EL OUFIR Hatim",
+            "role": "Developer",
+            "email": "eloufirhatim@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Heloufir\\FilamentKanban\\FilamentKanbanProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
