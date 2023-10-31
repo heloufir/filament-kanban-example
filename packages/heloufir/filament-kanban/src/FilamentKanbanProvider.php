@@ -34,13 +34,6 @@ class FilamentKanbanProvider extends PackageServiceProvider
         // Package assets
         $package->hasAssets();
 
-        // Initialize Livewire components
-        $this->initComponents();
-
-    }
-
-    private function initComponents(): void {
-        Livewire::component('fk-kanban', Kanban::class);
     }
 
     public function packageBooted()

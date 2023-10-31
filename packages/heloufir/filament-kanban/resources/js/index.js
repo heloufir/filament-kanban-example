@@ -21,7 +21,7 @@ document.addEventListener('livewire:initialized', function () {
                 const newIndex = evt.newIndex;  // element's new index within new parent
                 if (previousList.dataset.status !== targetList.dataset.status || oldIndex !== newIndex) {
                     if (previousList !== targetList) {
-                        Livewire.dispatch('filament-kanban.record-dragged', {
+                        Livewire.dispatch('filament-kanban.record-drag', {
                             record: +itemEl.dataset.id,
                             source: +previousList.dataset.status,
                             target: +targetList.dataset.status,
@@ -29,7 +29,7 @@ document.addEventListener('livewire:initialized', function () {
                             newIndex: newIndex
                         });
                     } else {
-                        Livewire.dispatch('filament-kanban.record-sorted', {
+                        Livewire.dispatch('filament-kanban.record-sort', {
                             record: +itemEl.dataset.id,
                             source: +previousList.dataset.status,
                             target: +targetList.dataset.status,
