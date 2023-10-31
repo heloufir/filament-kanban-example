@@ -2,6 +2,7 @@
 
 namespace Heloufir\FilamentKanban;
 
+use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Assets\Theme;
 use Filament\Support\Facades\FilamentAsset;
@@ -45,7 +46,8 @@ class FilamentKanbanProvider extends PackageServiceProvider
     public function packageBooted()
     {
         FilamentAsset::register([
-            Theme::make('app', __DIR__ . '/../dist/filament-kanban.css'),
+            Css::make('filament-kanban', __DIR__ . '/../dist/filament-kanban.css'),
+            Js::make('filament-kanban-sortable', __DIR__ . '/../dist/filament-kanban.js'),
         ], 'heloufir/filament-kanban');
     }
 }

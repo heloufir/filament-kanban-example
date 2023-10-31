@@ -2,17 +2,25 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "build:filament-kanban-css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/filament-kanban/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --minify"
+        "dev": "npm-run-all --parallel dev:*",
+        "dev:js": "node bin/build.js --dev",
+        "dev:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/filament-kanban/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --watch",
+
+        "build": "npm-run-all build:*",
+        "build:js": "node bin/build.js",
+        "build:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/filament-kanban/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --minify"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.6",
         "@tailwindcss/typography": "^0.5.10",
         "autoprefixer": "^10.4.16",
         "axios": "^1.1.2",
+        "esbuild": "^0.19.5",
         "laravel-vite-plugin": "^0.8.0",
+        "minify": "^10.5.2",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.4.31",
+        "sortablejs": "^1.15.0",
         "tailwindcss": "^3.3.5",
         "vite": "^4.0.0"
     }
