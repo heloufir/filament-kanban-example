@@ -61,9 +61,12 @@ class Kanban extends Page
 
     public function recordClick(int $record): void
     {
-        $this->dispatch('filament-kanban.record-clicked', [
-            'record' => $record
-        ]);
+        $index = $this->recordIndexById($record);
+        if ($this->records[$index]['click'] ?? true) {
+            $this->dispatch('filament-kanban.record-clicked', [
+                'record' => $record
+            ]);
+        }
     }
 
     /**

@@ -20,7 +20,7 @@
 
                         <div class="kanban-cel @if(!($record['draggable'] ?? true) || !($status['draggable'] ?? true)) disable-draggable bg-gray-200 border-gray-300 @else bg-white border-gray-200 hover:shadow-lg hover:cursor-move @endif w-full p-3 rounded-lg border flex flex-col gap-2" data-id="{{ $record['id'] }}" data-draggable="{{ $record['draggable'] ?? true }}">
                             <span class="kanban-cel-ref text-xs text-gray-600">{!! $record['subtitle'] !!}</span>
-                            <a class="kanban-cel-title text-sm text-gray-700 font-medium hover:underline hover:cursor-pointer" wire:click="recordClick({{ $record['id'] }})">{!! $record['title'] !!}</a>
+                            <a class="kanban-cel-title text-sm text-gray-700 font-medium @if($record['click'] ?? true) hover:underline hover:cursor-pointer @endif" wire:click="recordClick({{ $record['id'] }})">{!! $record['title'] !!}</a>
                         </div>
 
                     @endforeach
