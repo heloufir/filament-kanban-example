@@ -13,6 +13,7 @@ class Test extends Kanban
     protected $listeners = [
         'filament-kanban.record-dragged' => 'recordDragged',
         'filament-kanban.record-sorted' => 'recordSorted',
+        'filament-kanban.record-clicked' => 'recordClicked',
     ];
 
     public array $statuses = [
@@ -46,6 +47,11 @@ class Test extends Kanban
     }
 
     public function recordSorted(array $event)
+    {
+        dd('record-sorted', $event);
+    }
+
+    public function recordClicked(array $event)
     {
         dd('record-sorted', $event);
     }

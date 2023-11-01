@@ -59,6 +59,13 @@ class Kanban extends Page
         }
     }
 
+    public function recordClick(int $record): void
+    {
+        $this->dispatch('filament-kanban.record-clicked', [
+            'record' => $record
+        ]);
+    }
+
     /**
      * Get records based on a status id
      * @param int $status
