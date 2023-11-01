@@ -4,7 +4,6 @@ namespace Heloufir\FilamentKanban;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Heloufir\FilamentKanban\Livewire\Kanban;
 
 class FilamentKanbanPlugin implements Plugin
 {
@@ -15,10 +14,7 @@ class FilamentKanbanPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel
-            ->pages([
-                Kanban::class,
-            ]);
+        //
     }
 
     public function boot(Panel $panel): void

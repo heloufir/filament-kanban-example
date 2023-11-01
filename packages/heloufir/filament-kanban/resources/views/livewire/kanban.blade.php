@@ -1,8 +1,8 @@
 <x-filament-panels::page>
 
-    <div class="kanban w-full h-[550px] overflow-x-auto flex flex-row gap-3">
+    <div class="kanban w-full overflow-x-auto flex flex-row gap-3" @if(config('filament-kanban.kanban-height')) style="height: {{ config('filament-kanban.kanban-height') }}px;" @endif>
 
-        @foreach($this->statuses() as $status)
+        @foreach($this->statuses as $status)
             @php
                 $records = $this->recordsByStatus($status['id']);
             @endphp
@@ -31,5 +31,24 @@
         @endforeach
 
     </div>
+
+    @if(!config('filament-kanban.kanban-height'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const kanban = document.querySelector('.kanban');
+                if (kanban) {
+                    const topPosition = kanban.getBoundingClientRect().top;
+                    const distanceToBottom = window.innerHeight - topPosition;
+                    const minHeight = 500;
+                    const filamentSectionPaddingHeight = '2rem';
+                    if (distanceToBottom > minHeight) {
+                        kanban.style.height = 'calc(' + distanceToBottom + 'px - ' + filamentSectionPaddingHeight + ')';
+                    } else {
+                        kanban.style.height = minHeight + 'px';
+                    }
+                }
+            });
+        </script>
+    @endif
 
 </x-filament-panels::page>
