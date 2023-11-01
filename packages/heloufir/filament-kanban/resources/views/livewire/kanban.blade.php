@@ -14,11 +14,11 @@
                     <span class="kanban-col-title-badge bg-slate-200 p-0.5 text-xs rounded text-gray-500">{{ sizeof($records) }}</span>
                 </div>
 
-                <div class="kanban-col-container w-full h-full px-3 mb-6 flex flex-col gap-3" data-status="{{ $status['id'] }}">
+                <div class="kanban-col-container w-full h-full px-3 mb-6 flex flex-col gap-3" data-status="{{ $status['id'] }}" data-draggable="{{ $status['draggable'] ?? true }}">
 
                     @foreach($records as $record)
 
-                        <div class="kanban-cel w-full p-3 rounded-lg bg-white border border-gray-200 flex flex-col gap-2 hover:shadow-lg" data-id="{{ $record['id'] }}">
+                        <div class="kanban-cel @if(!($record['draggable'] ?? true) || !($status['draggable'] ?? true)) disable-draggable bg-gray-200 border-gray-300 @else bg-white border-gray-200 hover:shadow-lg hover:cursor-move @endif w-full p-3 rounded-lg border flex flex-col gap-2" data-id="{{ $record['id'] }}" data-draggable="{{ $record['draggable'] ?? true }}">
                             <span class="kanban-cel-ref text-xs text-gray-600">{!! $record['subtitle'] !!}</span>
                             <a href="#" class="kanban-cel-title text-sm text-gray-700 font-medium hover:underline hover:cursor-pointer">{!! $record['title'] !!}</a>
                         </div>

@@ -23,13 +23,13 @@ class Kanban extends Page
     public array $records = [];
 
     #[On('filament-kanban.record-drag')]
-    public function recordDrag(int $record, int $source, int $target, int $oldIndex, int $newIndex)
+    public function recordDrag(int $record, int $source, int $target, int $oldIndex, int $newIndex, array $newOrder)
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
             $this->records[$index]['status'] = $target;
             $this->records[$index]['sort'] = $newIndex;
-            $reorderedRecords = $this->reorderRecords($target, $record, $newIndex);
+            $reorderedRecords = $this->reorderRecords($target, $newOrder);
             $this->dispatch('filament-kanban.record-dragged', [
                 'record' => $record,
                 'source' => $source,
@@ -42,12 +42,12 @@ class Kanban extends Page
     }
 
     #[On('filament-kanban.record-sort')]
-    public function recordSort(int $record, int $source, int $target, int $oldIndex, int $newIndex)
+    public function recordSort(int $record, int $source, int $target, int $oldIndex, int $newIndex, array $newOrder)
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
             $this->records[$index]['sort'] = $newIndex;
-            $reorderedRecords = $this->reorderRecords($target, $record, $newIndex);
+            $reorderedRecords = $this->reorderRecords($target, $newOrder);
             $this->dispatch('filament-kanban.record-sorted', [
                 'record' => $record,
                 'source' => $source,
@@ -87,22 +87,23 @@ class Kanban extends Page
 
     /**
      * Reorder records inside based on status
-     * @param int $target
-     * @param int $record
-     * @param int $newIndex
+     * @param int $status
+     * @param array $newOrder
      * @return array
      * @author https://github.com/heloufir
      */
-    protected function reorderRecords(int $status, int $record, int $index): array
+    protected function reorderRecords(int $status, array $newOrder): array
     {
         $reorderedRecords = [];
-        $records = array_filter($this->recordsByStatus($status), fn($item) => $item['sort'] >= $index && $item['id'] != $record);
-        foreach ($records as $item) {
-            $recordIndex = $this->recordIndexById($item['id']);
-            $oldIndex = $this->records[$recordIndex]['sort'];
-            $newIndex = $oldIndex + 1;
-            $this->records[$recordIndex]['sort'] = $newIndex;
-            $reorderedRecords[] = ['record' => $item['id'], 'old_index' => $oldIndex, 'new_index' => $newIndex];
+        $statusRecords = $this->recordsByStatus($status);
+        for ($i = 0; $i < sizeof($statusRecords); $i++) {
+            $recordIndex = $this->recordIndexById($statusRecords[$i]['id']);
+            $oldSort = $this->records[$recordIndex]['sort'];
+            $newSort = array_search($this->records[$recordIndex]['id'], $newOrder);
+            $this->records[$recordIndex]['sort'] = $newSort;
+            if ($oldSort !== $newSort) {
+                $reorderedRecords[] = ['record' => $this->records[$recordIndex]['id'], 'old_index' => $oldSort, 'new_index' => $newSort];
+            }
         }
         return $reorderedRecords;
     }

@@ -6,12 +6,12 @@ document.addEventListener('livewire:initialized', function () {
         const sortable = Sortable.create(el, {
             group: {
                 name: 'status-' + el.dataset.status,
-                put: true,
-                pull: true
+                put: el.dataset.draggable === "1",
+                pull: el.dataset.draggable === "1"
             },
             sort: true,
             animation: 200,
-            filter: ".disable-sortable",
+            filter: ".disable-draggable",
 
             onEnd: function (evt) {
                 const itemEl = evt.item;  // dragged HTMLElement
@@ -19,22 +19,22 @@ document.addEventListener('livewire:initialized', function () {
                 const previousList = evt.from;  // previous list
                 const oldIndex = evt.oldIndex;  // element's old index within old parent
                 const newIndex = evt.newIndex;  // element's new index within new parent
-                if (previousList !== targetList) {
-                    Livewire.dispatch('filament-kanban.record-drag', {
+                if (evt.from.dataset.draggable) {
+                    const data = {
                         record: +itemEl.dataset.id,
                         source: +previousList.dataset.status,
                         target: +targetList.dataset.status,
                         oldIndex: oldIndex,
-                        newIndex: newIndex
-                    });
-                } else {
-                    Livewire.dispatch('filament-kanban.record-sort', {
-                        record: +itemEl.dataset.id,
-                        source: +previousList.dataset.status,
-                        target: +targetList.dataset.status,
-                        oldIndex: oldIndex,
-                        newIndex: newIndex
-                    });
+                        newIndex: newIndex,
+                        newOrder: sortable.toArray()
+                    };
+                    let eventName;
+                    if (previousList !== targetList) {
+                        eventName = 'filament-kanban.record-drag';
+                    } else {
+                        eventName = 'filament-kanban.record-sort';
+                    }
+                    Livewire.dispatch(eventName, data);
                 }
             },
         });
