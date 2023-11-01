@@ -21,7 +21,6 @@ document.addEventListener('livewire:initialized', function () {
                 const newIndex = evt.newIndex;  // element's new index within new parent
                 if (evt.from.dataset.draggable) {
                     const newOrder = getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).unique();
-                    console.log(newOrder);
                     const data = {
                         record: +itemEl.dataset.id,
                         source: +previousList.dataset.status,

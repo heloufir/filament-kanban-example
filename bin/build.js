@@ -76,6 +76,6 @@ const defaultOptions = {
 compile({
     ...defaultOptions,
     platform: 'browser',
-    entryPoints: [`./packages/heloufir/filament-kanban/resources/js/index.js`],
+    entryPoints: [`./packages/heloufir/resources/js/index.js`],
     outfile: `./packages/heloufir/filament-kanban/dist/filament-kanban.js`,
 })

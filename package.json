@@ -4,11 +4,11 @@
     "scripts": {
         "dev": "npm-run-all --parallel dev:*",
         "dev:js": "node bin/build.js --dev",
-        "dev:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/filament-kanban/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --watch",
+        "dev:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --watch",
 
         "build": "npm-run-all build:*",
         "build:js": "node bin/build.js",
-        "build:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/filament-kanban/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --minify"
+        "build:css": "npx tailwindcss -c ./packages/heloufir/filament-kanban/tailwind.config.js -i ./packages/heloufir/resources/css/filament-kanban.scss -o ./packages/heloufir/filament-kanban/dist/filament-kanban.css --minify"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.6",
