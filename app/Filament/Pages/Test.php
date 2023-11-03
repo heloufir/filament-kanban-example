@@ -14,8 +14,6 @@ class Test extends Kanban
 
     protected static bool $handleRecordClickWithModal = true;
 
-    protected static bool $enableCreateAction = true;
-
     protected static ?string $title = 'Filament Kanban';
 
     protected $listeners = [
@@ -58,6 +56,7 @@ class Test extends Kanban
 
     public function submitRecord(): void
     {
+        dd($this->record);
         $this->dispatch('close-modal', id: 'filament-kanban.record-modal');
     }
 
