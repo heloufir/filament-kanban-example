@@ -2,8 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Heloufir\FilamentKanban\Livewire\Kanban;
 
 class Test extends Kanban
