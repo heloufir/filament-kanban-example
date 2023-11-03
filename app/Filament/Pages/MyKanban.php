@@ -2,23 +2,17 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Heloufir\FilamentKanban\Livewire\Kanban;
 
-class Test extends Kanban
+class MyKanban extends Kanban
 {
-    protected static ?string $navigationIcon = 'heroicon-o-rocket-launch';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static bool $handleRecordClickWithModal = true;
-
-    protected static bool $enableCreateAction = true;
-
-    protected static ?string $title = 'Filament Kanban';
+    protected static bool $shouldRegisterNavigation = false;
 
     protected $listeners = [
-        'filament-kanban.record-dragged' => 'recordDragged',
         'filament-kanban.record-sorted' => 'recordSorted',
+        'filament-kanban.record-dragged' => 'recordDragged',
         'filament-kanban.record-clicked' => 'recordClicked',
     ];
 
@@ -49,28 +43,15 @@ class Test extends Kanban
         ['id' => 17, 'status' => 1, 'title' => 'Record 2 Col 1', 'subtitle' => 'filament-kanban #21', 'sort' => 1, 'draggable' => true, 'click' => true, 'progress' => 10],
     ];
 
-    protected function showProgress(): bool|array
-    {
-        return true;
+    public function recordSorted(array $event): void {
+        dd($event);
     }
 
-    public function submitRecord(): void
-    {
-        $this->dispatch('close-modal', id: 'filament-kanban.record-modal');
+    public function recordDragged(array $event): void {
+        dd($event);
     }
 
-    public function recordDragged(array $event)
-    {
-        dd('record-dragged', $event);
-    }
-
-    public function recordSorted(array $event)
-    {
-        dd('record-sorted', $event);
-    }
-
-    public function recordClicked(array $event)
-    {
-        dd('record-sorted', $event);
+    public function recordClicked(array $event): void {
+        dd($event);
     }
 }
