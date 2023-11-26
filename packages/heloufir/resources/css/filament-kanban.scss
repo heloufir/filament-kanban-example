@@ -1,1 +1,9 @@
 @import 'index.css';
+
+.tooltip {
+    @apply invisible absolute;
+}
+
+.kanban-cell-avatars-owner:hover .tooltip {
+    @apply visible z-50;
+}
