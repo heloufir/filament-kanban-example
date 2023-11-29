@@ -10,6 +10,8 @@ class Test extends Kanban
 
     protected static bool $handleRecordClickWithModal = true;
 
+    protected static bool $enableCreateAction = true;
+
     protected static ?string $title = 'Filament Kanban';
 
     protected $listeners = [
@@ -60,22 +62,22 @@ class Test extends Kanban
 
     public function submitRecord(): void
     {
-        dd($this->record);
+        //dd($this->record);
         $this->dispatch('close-modal', id: 'filament-kanban.record-modal');
     }
 
     public function recordDragged(array $event)
     {
-        dd('record-dragged', $event);
+        //dd('record-dragged', $event);
     }
 
     public function recordSorted(array $event)
     {
-        dd('record-sorted', $event);
+        //dd('record-sorted', $event);
     }
 
     public function recordClicked(array $event)
     {
-        dd('record-sorted', $event);
+        //dd('record-sorted', $event);
     }
 }
