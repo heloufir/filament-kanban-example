@@ -2,6 +2,8 @@
 
 return [
 
-    'kanban-height' => null
+    'kanban-height' => null,
+
+    'deadline-format' => 'j M.'
 
 ];
