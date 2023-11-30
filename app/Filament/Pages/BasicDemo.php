@@ -25,9 +25,9 @@ class BasicDemo extends Kanban
 
     public function mount(): void
     {
-        $this->setStatuses(KanbanService::getStatuses());
-        $this->setRecords(KanbanService::getRecords());
-        $this->setResources(KanbanService::getResources());
+        Parent::setStatuses(KanbanService::getStatuses());
+        Parent::setRecords(KanbanService::getRecords());
+        Parent::setResources(KanbanService::getResources());
     }
 
     protected function showProgress(): bool|array
