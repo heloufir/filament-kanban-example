@@ -39,6 +39,12 @@ class Kanban extends Page implements HasForms
     protected static bool $enableCreateAction = false;
 
     /**
+     * Enable or disable kanban filters
+     * @var bool
+     */
+    public bool $showFilters = false;
+
+    /**
      * Statuses list
      * @var array
      */

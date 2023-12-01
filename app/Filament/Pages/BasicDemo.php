@@ -15,6 +15,8 @@ class BasicDemo extends Kanban
 
     protected static bool $enableCreateAction = true;
 
+    public bool $showFilters = true;
+
     protected static ?string $slug = 'basic-demo';
 
     protected static ?string $title = 'Basic Demo';

@@ -1,6 +1,8 @@
 <x-filament-panels::page>
 
-    @include('filament-kanban::livewire.kanban-filters')
+    @if($this->showFilters)
+        @include('filament-kanban::livewire.kanban-filters')
+    @endif
 
     <div class="kanban w-full overflow-x-hidden hover:overflow-x-auto flex flex-row gap-3"
          @if(config('filament-kanban.kanban-height')) style="height: {{ config('filament-kanban.kanban-height') }}px;" @endif>
