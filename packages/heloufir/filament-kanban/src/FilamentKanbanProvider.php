@@ -7,6 +7,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Assets\Theme;
 use Filament\Support\Facades\FilamentAsset;
 use Heloufir\FilamentKanban\Livewire\Kanban;
+use Heloufir\FilamentKanban\Livewire\KanbanFilters;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

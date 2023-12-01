@@ -1,5 +1,5 @@
 <div
-    class="kanban-col overflow-y-auto w-[330px] min-w-[330px] h-full rounded-lg bg-slate-100 dark:bg-slate-800 border border-gray-200 dark:border-gray-900 flex flex-col">
+    class="kanban-col overflow-y-hidden hover:overflow-y-auto w-[330px] min-w-[330px] h-full rounded-lg bg-slate-100 dark:bg-slate-800 border border-gray-200 dark:border-gray-900 flex flex-col">
 
     @include('filament-kanban::livewire.partials.column-header')
 

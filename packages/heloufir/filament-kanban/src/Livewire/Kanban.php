@@ -63,6 +63,12 @@ class Kanban extends Page implements HasForms
     public array $record = [];
 
     /**
+     * Filters data
+     * @var array
+     */
+    public array $filters = [];
+
+    /**
      * Modal mode, can be 'update' or 'create'
      * @var string
      */
@@ -270,6 +276,19 @@ class Kanban extends Page implements HasForms
     }
 
     /**
+     * Defining Forms
+     * @return string[]
+     * @author https://github.com/heloufir
+     */
+    protected function getForms(): array
+    {
+        return [
+            'form', // Modal form
+            'filterForm' // Filter form
+        ];
+    }
+
+    /**
      * Defining record dialog form
      * @param Form $form
      * @return Form
@@ -325,6 +344,44 @@ class Kanban extends Page implements HasForms
             TextInput::make('record.tags')
                 ->label(__('filament-kanban::filament-kanban.modal.form.tags'))
                 ->helperText(__('filament-kanban::filament-kanban.modal.form.tags-helper-text')),
+        ]);
+    }
+
+    /**
+     * Defining filter form
+     * @param Form $form
+     * @return Form
+     * @author https://github.com/heloufir
+     */
+    public function filterForm(Form $form): Form
+    {
+        return $form->schema([
+            Grid::make(3)
+                ->schema([
+                    DatePicker::make('filters.deadline')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.deadline')),
+
+                    TextInput::make('filters.title')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.title')),
+
+                    TextInput::make('filters.subtitle')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.subtitle')),
+                ]),
+
+            Grid::make(3)
+                ->schema([
+                    Select::make('filters.owner')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.owner'))
+                        ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
+
+                    Select::make('filters.assignees')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.assignees'))
+                        ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
+
+                    TextInput::make('filters.tags')
+                        ->label(__('filament-kanban::filament-kanban.modal.form.tags'))
+                        ->helperText(__('filament-kanban::filament-kanban.modal.form.tags-helper-text')),
+                ])
         ]);
     }
 
@@ -457,5 +514,28 @@ class Kanban extends Page implements HasForms
             // Less than 5 days (in the future)
             return 'bg-red-700';
         }
+    }
+
+    /**
+     * Filter records based on the form
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function submitFilter(): void
+    {
+        $data = $this->filterForm->getState()['filters'];
+        $this->dispatch('filament-kanban.filter', $data);
+    }
+
+    /**
+     * Reset filter forms
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function doResetFilter(): void
+    {
+        $this->filters = [];
+        $this->filterForm->fill();
+        $this->dispatch('filament-kanban.reset-filter');
     }
 }

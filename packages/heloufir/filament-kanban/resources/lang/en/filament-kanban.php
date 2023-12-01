@@ -34,6 +34,20 @@ return [
 
         ],
 
-    ]
+    ],
+
+    'filters' => [
+
+        'title' => 'Filters',
+
+        'buttons' => [
+
+            'submit' => 'Filter',
+
+            'reset' => 'Reset filters',
+
+        ],
+
+    ],
 
 ];

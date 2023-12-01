@@ -1,6 +1,8 @@
 <x-filament-panels::page>
 
-    <div class="kanban w-full overflow-x-auto flex flex-row gap-3"
+    @include('filament-kanban::livewire.kanban-filters')
+
+    <div class="kanban w-full overflow-x-hidden hover:overflow-x-auto flex flex-row gap-3"
          @if(config('filament-kanban.kanban-height')) style="height: {{ config('filament-kanban.kanban-height') }}px;" @endif>
 
         @foreach($this->statuses as $status)
