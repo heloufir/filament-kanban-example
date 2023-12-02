@@ -34,6 +34,22 @@ return [
 
         ],
 
+        'delete-confirmation' => [
+
+            'heading' => 'Delete Confirmation',
+
+            'description' => 'Are you sure you want to delete this item?',
+
+            'actions' => [
+
+                'confirm' => 'yes',
+
+                'cancel' => 'No, Cancel!'
+
+            ],
+
+        ],
+
     ],
 
     'filters' => [
@@ -47,6 +63,12 @@ return [
             'reset' => 'Reset filters',
 
         ],
+
+    ],
+
+    'record' => [
+
+        'delete' => 'Delete'
 
     ],
 

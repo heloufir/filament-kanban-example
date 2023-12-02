@@ -4,6 +4,16 @@
     @apply invisible absolute;
 }
 
-.kanban-cell-avatars-owner:hover .tooltip {
-    @apply visible z-50;
+.kanban-cell-avatars-owner:hover .tooltip,
+.kanban-cell-delete-btn:hover .tooltip
+{
+    @apply visible z-20;
+}
+
+.kanban-cell .kanban-cell-delete-btn {
+    @apply invisible;
+}
+
+.kanban-cell:hover .kanban-cell-delete-btn {
+    @apply visible z-20;
 }

@@ -31,6 +31,24 @@
         </form>
     </x-filament::modal>
 
+    <x-filament::modal id="filament-kanban.delete-modal" sticky-header width="lg" icon="heroicon-o-exclamation-triangle" icon-color="danger">
+        <x-slot name="heading">
+            @lang('filament-kanban::filament-kanban.modal.delete-confirmation.heading')
+        </x-slot>
+        <x-slot name="description">
+            @lang('filament-kanban::filament-kanban.modal.delete-confirmation.description')
+        </x-slot>
+
+        <x-slot name="footerActions">
+            <x-filament::button type="button" wire:click="confirmRecordDeletion" color="danger">
+                @lang('filament-kanban::filament-kanban.modal.delete-confirmation.actions.confirm')
+            </x-filament::button>
+            <x-filament::button type="button" wire:click="cancelRecordDeletion" color="gray">
+                @lang('filament-kanban::filament-kanban.modal.delete-confirmation.actions.cancel')
+            </x-filament::button>
+        </x-slot>
+    </x-filament::modal>
+
     @if(!config('filament-kanban.kanban-height'))
         <script>
             document.addEventListener('DOMContentLoaded', function () {

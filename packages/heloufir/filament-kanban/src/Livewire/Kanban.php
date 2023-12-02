@@ -69,6 +69,12 @@ class Kanban extends Page implements HasForms
     public array $record = [];
 
     /**
+     * Selected record after delete button click action
+     * @var array
+     */
+    public array $recordToDelete = [];
+
+    /**
      * Filters data
      * @var array
      */
@@ -267,17 +273,32 @@ class Kanban extends Page implements HasForms
     public function recordClick(int $record): void
     {
         $index = $this->recordIndexById($record);
-        if (static::$handleRecordClickWithModal) {
-            $this->modalMode = 'update';
-            $this->record = $this->records[$index];
-            $this->record['tags'] = isset($this->record['tags']) ? implode(',', $this->record['tags']) : null;
-            $this->dispatch('open-modal', id: 'filament-kanban.record-modal');
-        } else {
-            if ($this->records[$index]['click'] ?? true) {
+        if ($this->records[$index]['click'] ?? true) {
+            if (static::$handleRecordClickWithModal) {
+                $this->modalMode = 'update';
+                $this->record = $this->records[$index];
+                $this->record['tags'] = isset($this->record['tags']) ? implode(',', $this->record['tags']) : null;
+                $this->dispatch('open-modal', id: 'filament-kanban.record-modal');
+            } else {
                 $this->dispatch('filament-kanban.record-clicked', [
                     'record' => $record
                 ]);
             }
+        }
+    }
+
+    /**
+     * Handle record delete event
+     * @param int $record
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function recordDelete(int $record): void
+    {
+        $index = $this->recordIndexById($record);
+        if ($this->records[$index]['delete'] ?? true) {
+            $this->recordToDelete = $this->records[$index];
+            $this->dispatch('open-modal', id: 'filament-kanban.delete-modal');
         }
     }
 
@@ -543,5 +564,28 @@ class Kanban extends Page implements HasForms
         $this->filters = [];
         $this->filterForm->fill();
         $this->dispatch('filament-kanban.reset-filter');
+    }
+
+    /**
+     * Confirm deletion of a record
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function confirmRecordDeletion(): void
+    {
+        $this->dispatch('filament-kanban.record-deleted', $this->recordToDelete);
+        $this->recordToDelete = [];
+        $this->dispatch('close-modal', id: 'filament-kanban.delete-modal');
+    }
+
+    /**
+     * Cancel deletion of a record
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function cancelRecordDeletion(): void
+    {
+        $this->recordToDelete = [];
+        $this->dispatch('close-modal', id: 'filament-kanban.delete-modal');
     }
 }
