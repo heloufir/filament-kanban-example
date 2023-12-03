@@ -11,7 +11,7 @@ use Heloufir\FilamentKanban\Livewire\Kanban;
 
 class CustomFormDemo extends Kanban
 {
-    protected static ?string $navigationIcon = 'heroicon-o-rocket-launch';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     protected static bool $handleRecordClickWithModal = true;
 
