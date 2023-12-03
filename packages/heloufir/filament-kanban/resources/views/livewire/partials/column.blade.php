@@ -12,6 +12,8 @@
 
         @endforeach
 
+        <div class="kanban-col-fixer h-2 w-full">&nbsp;</div>
+
     </div>
 
 </div>
