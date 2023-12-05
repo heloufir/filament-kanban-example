@@ -10,7 +10,7 @@ return [
 
         'size' => '2xl',
 
-        'position' => ''
+        'position' => 'slide-over'
 
     ]
 
