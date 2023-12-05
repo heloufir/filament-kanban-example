@@ -7,7 +7,7 @@ use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Heloufir\FilamentKanban\Livewire\Kanban;
 
-class BasicDemo extends Kanban
+class CustomRecordModalDemo extends Kanban
 {
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
 
@@ -17,9 +17,9 @@ class BasicDemo extends Kanban
 
     public bool $showFilters = true;
 
-    protected static ?string $slug = 'demo/basic';
+    protected static ?string $slug = 'demo/custom-record-modal';
 
-    protected static ?string $title = 'Basic';
+    protected static ?string $title = 'Custom record modal';
 
     protected static ?string $navigationGroup = 'Demo';
 
@@ -171,5 +171,28 @@ class BasicDemo extends Kanban
         if (isset($record['id']) && $index = $this->recordIndexById($record['id'])) {
             unset($this->records[$index]);
         }
+    }
+
+    public function getRecordModalActions(): array
+    {
+        return [
+            Action::make('modal.cancel')
+                ->label('Cancel')
+                ->color('gray')
+                ->action('closeRecordModal'),
+
+            Action::make('modal.show-source-code')
+                ->label('Show Demo Source Code')
+                ->color('info')
+                ->icon('heroicon-m-code-bracket')
+                ->link()
+                ->url('https://github.com/heloufir/filament-kanban-demo')
+                ->openUrlInNewTab(),
+        ];
+    }
+
+    public function closeRecordModal(): void
+    {
+        $this->dispatch('close-modal', id: 'filament-kanban.record-modal');
     }
 }

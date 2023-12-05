@@ -19,9 +19,11 @@ class CustomFormDemo extends Kanban
 
     public bool $showFilters = true;
 
-    protected static ?string $slug = 'custom-form-demo';
+    protected static ?string $slug = 'demo/custom-form';
 
-    protected static ?string $title = 'Custom Form Demo';
+    protected static ?string $title = 'Custom Form';
+
+    protected static ?string $navigationGroup = 'Demo';
 
     protected $listeners = [
         'filament-kanban.record-sorted' => 'recordSorted',

@@ -370,7 +370,7 @@ class Kanban extends Page implements HasForms
 
             TagsInput::make('record.tags')
                 ->label(__('filament-kanban::filament-kanban.modal.form.tags'))
-                ->visible(fn () => isset($this->record['tags']))
+                ->visible(fn() => isset($this->record['tags']))
                 ->helperText(__('filament-kanban::filament-kanban.modal.form.tags-helper-text')),
         ]);
     }
@@ -588,5 +588,15 @@ class Kanban extends Page implements HasForms
     {
         $this->recordToDelete = [];
         $this->dispatch('close-modal', id: 'filament-kanban.delete-modal');
+    }
+
+    /**
+     * Get an array of actions to add into record edition / creation modal
+     * @return array
+     * @author https://github.com/heloufir
+     */
+    public function getRecordModalActions(): array
+    {
+        return [];
     }
 }

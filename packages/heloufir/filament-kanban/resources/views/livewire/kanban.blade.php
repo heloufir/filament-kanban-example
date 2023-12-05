@@ -17,7 +17,7 @@
 
     </div>
 
-    <x-filament::modal id="filament-kanban.record-modal" slide-over sticky-header width="2xl">
+    <x-filament::modal id="filament-kanban.record-modal" :slide-over="config('filament-kanban.record-modal.position') === 'slide-over'" sticky-header width="{{ config('filament-kanban.record-modal.size') }}">
         <x-slot name="heading">
             {{ $modalMode === 'update' ? ($record['title'] ?? '') : __('filament-kanban::filament-kanban.modal.create') }}
         </x-slot>
@@ -25,9 +25,15 @@
         <form wire:submit="submitRecord">
             {{ $this->form }}
 
-            <x-filament::button type="submit" class="mt-6">
-                Submit
-            </x-filament::button>
+            <div class="flex flex-row justify-start items-center gap-3 flex-wrap w-full mt-6">
+                <x-filament::button type="submit">
+                    Submit
+                </x-filament::button>
+
+                @foreach($this->getRecordModalActions() as $recordModalAction)
+                    {!! $recordModalAction->render() !!}
+                @endforeach
+            </div>
         </form>
     </x-filament::modal>
 
