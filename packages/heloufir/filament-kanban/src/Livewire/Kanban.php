@@ -8,6 +8,7 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -277,7 +278,6 @@ class Kanban extends Page implements HasForms
             if (static::$handleRecordClickWithModal) {
                 $this->modalMode = 'update';
                 $this->record = $this->records[$index];
-                $this->record['tags'] = isset($this->record['tags']) ? implode(',', $this->record['tags']) : null;
                 $this->dispatch('open-modal', id: 'filament-kanban.record-modal');
             } else {
                 $this->dispatch('filament-kanban.record-clicked', [
@@ -368,8 +368,9 @@ class Kanban extends Page implements HasForms
                 ->label(__('filament-kanban::filament-kanban.modal.form.assignees'))
                 ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
 
-            TextInput::make('record.tags')
+            TagsInput::make('record.tags')
                 ->label(__('filament-kanban::filament-kanban.modal.form.tags'))
+                ->visible(fn () => isset($this->record['tags']))
                 ->helperText(__('filament-kanban::filament-kanban.modal.form.tags-helper-text')),
         ]);
     }
