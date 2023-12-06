@@ -12,6 +12,8 @@ return [
 
         'create' => 'Create a new record',
 
+        'submit' => 'Submit',
+
         'form' => [
 
             'title' => 'Record title',

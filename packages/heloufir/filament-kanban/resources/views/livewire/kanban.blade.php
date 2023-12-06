@@ -27,7 +27,7 @@
 
             <div class="flex flex-row justify-start items-center gap-3 flex-wrap w-full mt-6">
                 <x-filament::button type="submit">
-                    Submit
+                    @lang('filament-kanban::filament-kanban.modal.submit')
                 </x-filament::button>
 
                 @foreach($this->getRecordModalActions() as $recordModalAction)
