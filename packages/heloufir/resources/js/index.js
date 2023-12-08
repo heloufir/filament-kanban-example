@@ -82,6 +82,23 @@ document.kanbanUtilities.kanbanResizeHeight = function () {
     }
 }
 
+document.kanbanUtilities.selectedRecord = function () {
+    setTimeout(() => {
+
+        const url = new URL(window.location.href);
+        const urlParams = url.searchParams;
+
+        if (urlParams.has('selected')) {
+            const selected = urlParams.get('selected');
+            const recordTitle = document.querySelector('.kanban-cell[data-id="' + selected + '"] .kanban-cell-title');
+            if (recordTitle) {
+                recordTitle.click();
+            }
+        }
+
+    }, 300);
+}
+
 /**
  * Remove duplicates from an array
  * @returns {*[]}

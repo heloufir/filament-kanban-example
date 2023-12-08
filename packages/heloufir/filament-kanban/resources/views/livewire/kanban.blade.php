@@ -17,7 +17,9 @@
 
     </div>
 
-    <x-filament::modal id="filament-kanban.record-modal" :slide-over="config('filament-kanban.record-modal.position') === 'slide-over'" sticky-header width="{{ config('filament-kanban.record-modal.size') }}">
+    <x-filament::modal id="filament-kanban.record-modal"
+                       :slide-over="config('filament-kanban.record-modal.position') === 'slide-over'" sticky-header
+                       width="{{ config('filament-kanban.record-modal.size') }}">
         <x-slot name="heading">
             {{ $modalMode === 'update' ? ($record['title'] ?? '') : __('filament-kanban::filament-kanban.modal.create') }}
         </x-slot>
@@ -37,7 +39,8 @@
         </form>
     </x-filament::modal>
 
-    <x-filament::modal id="filament-kanban.delete-modal" sticky-header width="lg" icon="heroicon-o-exclamation-triangle" icon-color="danger">
+    <x-filament::modal id="filament-kanban.delete-modal" sticky-header width="lg" icon="heroicon-o-exclamation-triangle"
+                       icon-color="danger">
         <x-slot name="heading">
             @lang('filament-kanban::filament-kanban.modal.delete-confirmation.heading')
         </x-slot>
@@ -59,6 +62,21 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 document.kanbanUtilities.kanbanResizeHeight();
+
+                document.kanbanUtilities.selectedRecord();
+            });
+
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('filament-kanban.share-record', (event) => {
+                    const id = event.id;
+
+                    navigator.clipboard.writeText("{{ url()->current() }}?selected=" + id);
+
+                    new FilamentNotification()
+                        .title('{{ __('filament-kanban::filament-kanban.record.share.notification.title') }}')
+                        .success()
+                        .send()
+                });
             });
         </script>
     @endif

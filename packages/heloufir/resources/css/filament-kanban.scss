@@ -5,8 +5,7 @@
 }
 
 .kanban-cell-avatars-owner:hover .tooltip,
-.kanban-cell-delete-btn:hover .tooltip
-{
+.kanban-cell-delete-btn:hover .tooltip {
     @apply visible z-20;
 }
 
@@ -15,5 +14,13 @@
 }
 
 .kanban-cell:hover .kanban-cell-delete-btn {
+    @apply visible z-20;
+}
+
+.kanban-cell-title-container .btn {
+    @apply invisible transition-all duration-150;
+}
+
+.kanban-cell-title-container:hover .btn {
     @apply visible z-20;
 }

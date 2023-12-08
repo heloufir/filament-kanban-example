@@ -70,7 +70,19 @@ return [
 
     'record' => [
 
-        'delete' => 'Delete'
+        'delete' => 'Delete',
+
+        'share' => [
+
+            'button' => 'Copy record link',
+
+            'notification' => [
+
+                'title' => 'Record link copied to clipboard!'
+
+            ],
+
+        ],
 
     ],
 
