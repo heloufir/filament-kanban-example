@@ -69,8 +69,15 @@
             document.addEventListener('livewire:init', () => {
                 Livewire.on('filament-kanban.share-record', (event) => {
                     const id = event.id;
+                    const url = "{{ url()->current() }}?selected=" + id;
 
-                    navigator.clipboard.writeText("{{ url()->current() }}?selected=" + id);
+                    // Handle copy
+                    const textarea = document.createElement("textarea");
+                    textarea.textContent = url;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textarea);
 
                     new FilamentNotification()
                         .title('{{ __('filament-kanban::filament-kanban.record.share.notification.title') }}')
