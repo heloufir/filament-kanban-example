@@ -198,7 +198,7 @@ class CustomFormDemo extends Kanban
 
             Toggle::make('record.extra_3')
                 ->label('Extra input 3')
-                ->default(false)
+                ->visible(fn () => isset($this->record['extra_3']))
         ]);
     }
 }
