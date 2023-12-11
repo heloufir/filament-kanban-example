@@ -1,5 +1,5 @@
 <div class="kanban-cell-title-container w-full flex flex-row items-center justify-start gap-2">
-    <a class="kanban-cell-title text-sm text-gray-700 dark:text-gray-100 font-medium @if($r['click'] ?? true) hover:underline hover:cursor-pointer @endif" wire:click="recordClick({{ $r['id'] }})">
+    <a class="kanban-cell-title text-sm text-gray-700 dark:text-gray-100 font-medium @if($r['click'] ?? true) hover:underline hover:cursor-pointer @endif" wire:click="recordClick('{{ $r['id'] }}')">
         {!! $r['title'] !!}
     </a>
     @if($r['click'] ?? true)

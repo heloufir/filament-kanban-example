@@ -22,9 +22,9 @@ document.addEventListener('livewire:initialized', function () {
                 if (evt.from.dataset.draggable) {
                     const newOrder = document.kanbanUtilities.getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).unique();
                     const data = {
-                        record: +itemEl.dataset.id,
-                        source: +previousList.dataset.status,
-                        target: +targetList.dataset.status,
+                        record: parseInt(itemEl.dataset.id) === Number(itemEl.dataset.id) ? +itemEl.dataset.id : itemEl.dataset.id,
+                        source: parseInt(previousList.dataset.status) === Number(previousList.dataset.status) ? +previousList.dataset.status : previousList.dataset.status,
+                        target: parseInt(targetList.dataset.status) === Number(targetList.dataset.status) ? +targetList.dataset.status : targetList.dataset.status,
                         oldIndex: oldIndex,
                         newIndex: newIndex,
                         newOrder: newOrder
@@ -35,6 +35,7 @@ document.addEventListener('livewire:initialized', function () {
                     } else {
                         eventName = 'filament-kanban.record-sort';
                     }
+                    console.log(data);
                     Livewire.dispatch(eventName, data);
                 }
             },

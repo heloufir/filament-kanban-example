@@ -89,11 +89,11 @@ class Kanban extends Page implements HasForms
 
     /**
      * Get records based on a status id
-     * @param int $status
+     * @param int|string $status
      * @return array
      * @author https://github.com/heloufir
      */
-    protected function recordsByStatus(int $status): array
+    protected function recordsByStatus(int|string $status): array
     {
         $results = array_filter($this->records, fn($item) => $item['status'] === $status);
         usort($results, function ($a, $b) {
@@ -104,23 +104,23 @@ class Kanban extends Page implements HasForms
 
     /**
      * Get record by ID
-     * @param int $id
+     * @param int|string $id
      * @return array|null
      * @author https://github.com/heloufir
      */
-    protected function recordIndexById(int $id): ?int
+    protected function recordIndexById(int|string $id): ?int
     {
         return array_search($id, array_column($this->records, 'id')) ?? null;
     }
 
     /**
      * Reorder records inside based on status
-     * @param int $status
+     * @param int|string $status
      * @param array $newOrder
      * @return array
      * @author https://github.com/heloufir
      */
-    protected function reorderRecords(int $status, array $newOrder): array
+    protected function reorderRecords(int|string $status, array $newOrder): array
     {
         $reorderedRecords = [];
         $statusRecords = $this->recordsByStatus($status);
@@ -208,9 +208,9 @@ class Kanban extends Page implements HasForms
 
     /**
      * Handle record dragged javascript event
-     * @param int $record
-     * @param int $source
-     * @param int $target
+     * @param int|string $record
+     * @param int|string $source
+     * @param int|string $target
      * @param int $oldIndex
      * @param int $newIndex
      * @param array $newOrder
@@ -218,7 +218,7 @@ class Kanban extends Page implements HasForms
      * @author https://github.com/heloufir
      */
     #[On('filament-kanban.record-drag')]
-    public function recordDrag(int $record, int $source, int $target, int $oldIndex, int $newIndex, array $newOrder)
+    public function recordDrag(int|string $record, int|string $source, int|string $target, int $oldIndex, int $newIndex, array $newOrder)
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
@@ -238,9 +238,9 @@ class Kanban extends Page implements HasForms
 
     /**
      * Handle record sorted javascript event
-     * @param int $record
-     * @param int $source
-     * @param int $target
+     * @param int|string $record
+     * @param int|string $source
+     * @param int|string $target
      * @param int $oldIndex
      * @param int $newIndex
      * @param array $newOrder
@@ -248,7 +248,7 @@ class Kanban extends Page implements HasForms
      * @author https://github.com/heloufir
      */
     #[On('filament-kanban.record-sort')]
-    public function recordSort(int $record, int $source, int $target, int $oldIndex, int $newIndex, array $newOrder)
+    public function recordSort(int|string $record, int|string $source, int|string $target, int $oldIndex, int $newIndex, array $newOrder)
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
@@ -267,11 +267,11 @@ class Kanban extends Page implements HasForms
 
     /**
      * Handle record click event
-     * @param int $record
+     * @param int|string $record
      * @return void
      * @author https://github.com/heloufir
      */
-    public function recordClick(int $record): void
+    public function recordClick(int|string $record): void
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index]['click'] ?? true) {
@@ -289,11 +289,11 @@ class Kanban extends Page implements HasForms
 
     /**
      * Handle record delete event
-     * @param int $record
+     * @param int|string $record
      * @return void
      * @author https://github.com/heloufir
      */
-    public function recordDelete(int $record): void
+    public function recordDelete(int|string $record): void
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index]['delete'] ?? true) {
@@ -415,11 +415,11 @@ class Kanban extends Page implements HasForms
 
     /**
      * Get resource avatar based on it's id
-     * @param int $resource
+     * @param int|string $resource
      * @return string|null
      * @author https://github.com/heloufir
      */
-    public function getResourceAvatar(int $resource): string|null
+    public function getResourceAvatar(int|string $resource): string|null
     {
         try {
             $resource = collect($this->resources)->where('id', $resource)->firstOrFail();
@@ -431,11 +431,11 @@ class Kanban extends Page implements HasForms
 
     /**
      * Get resource name based on it's id
-     * @param int $resource
+     * @param int|string $resource
      * @return string|null
      * @author https://github.com/heloufir
      */
-    public function getResourceName(int $resource): string|null
+    public function getResourceName(int|string $resource): string|null
     {
         try {
             $resource = collect($this->resources)->where('id', $resource)->firstOrFail();
