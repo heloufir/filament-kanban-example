@@ -45,7 +45,7 @@ class StringIdSupportDemo extends Kanban
                 ->color('gray')
                 ->icon('heroicon-m-code-bracket')
                 ->label('View on Github')
-                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/BasicDemo.php')
+                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/StringIdSupportDemo.php')
         ], Parent::getActions());
     }
 
