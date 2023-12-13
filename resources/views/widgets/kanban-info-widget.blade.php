@@ -6,12 +6,12 @@
                     href="https://filament-kanban-docs.heloufir.dev"
                     rel="noopener noreferrer"
                     target="_blank"
-                    class="font-bold italic"
+                    class="font-bold italic text-gray-700"
                 >
                     Filament Kanban
                 </a>
 
-                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                <p class="mt-2 text-xs text-gray-700">
                     v1.4.13
                     <br>
                     <a href="https://filament-kanban-docs.heloufir.dev/#/releases?id=releases" target="_blank"
@@ -19,7 +19,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-col items-end gap-y-1">
+            <div class="flex flex-col items-end gap-y-1 text-gray-700">
                 <x-filament::link
                     color="gray"
                     href="https://filament-kanban-docs.heloufir.dev"
@@ -29,7 +29,7 @@
                     target="_blank"
 
                 >
-                    Documentation
+                    <span class="text-gray-700 hover:underline">Documentation</span>
                 </x-filament::link>
 
                 <x-filament::link
@@ -48,7 +48,7 @@
                         </svg>
                     </x-slot>
 
-                    Online Demo
+                    <span class="text-gray-700 hover:underline">Online Demo</span>
                 </x-filament::link>
 
                 <x-filament::link
@@ -73,7 +73,7 @@
                                 stroke-miterlimit="10" stroke-width="4" class="stroke-00aeef"></path></svg>
                     </x-slot>
 
-                    Purchase the plugin
+                    <span class="text-gray-700 hover:underline">Purchase the plugin</span>
                 </x-filament::link>
             </div>
         </div>
