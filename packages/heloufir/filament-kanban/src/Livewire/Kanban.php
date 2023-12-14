@@ -80,8 +80,12 @@ class Kanban extends Page implements HasForms
      * @var array
      */
     public array $filters = [
+        'deadline' => null,
+        'title' => null,
+        'subtitle' => null,
         'assignees' => null,
         'owner' => null,
+        'tags' => [],
     ];
 
     /**
