@@ -85,7 +85,7 @@ class Kanban extends Page implements HasForms
         'subtitle' => null,
         'assignees' => null,
         'owner' => null,
-        'tags' => [],
+        'tags' => null,
     ];
 
     /**
