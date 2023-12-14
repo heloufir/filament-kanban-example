@@ -19,11 +19,11 @@
                     <form wire:submit="submitFilter">
                         {{ $this->filterForm }}
 
-                        <div class="w-full flex items-center gap-3">
+                        <div class="w-full flex items-center gap-3 mt-6">
                             <x-filament::button type="submit" class="mt-6" icon="heroicon-m-funnel" size="sm">
                                 @lang('filament-kanban::filament-kanban.filters.buttons.submit')
                             </x-filament::button>
-                            <x-filament::button type="button" class="mt-6" icon="heroicon-m-arrow-path" size="sm" wire:click="doResetFilter" color="gray">
+                            <x-filament::button type="button" class="mt-6" icon="heroicon-m-arrow-path" size="sm" wire:click="resetFilter" color="gray">
                                 @lang('filament-kanban::filament-kanban.filters.buttons.reset')
                             </x-filament::button>
                         </div>

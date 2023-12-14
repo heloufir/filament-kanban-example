@@ -79,7 +79,10 @@ class Kanban extends Page implements HasForms
      * Filters data
      * @var array
      */
-    public array $filters = [];
+    public array $filters = [
+        'assignees' => null,
+        'owner' => null,
+    ];
 
     /**
      * Modal mode, can be 'update' or 'create'
@@ -400,6 +403,8 @@ class Kanban extends Page implements HasForms
                 ->schema([
                     Select::make('filters.owner')
                         ->label(__('filament-kanban::filament-kanban.modal.form.owner'))
+                        ->native(false)
+                        ->searchable()
                         ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
 
                     Select::make('filters.assignees')
@@ -562,11 +567,9 @@ class Kanban extends Page implements HasForms
      * @return void
      * @author https://github.com/heloufir
      */
-    public function doResetFilter(): void
+    public function resetFilter(): void
     {
-        $this->filters = [];
         $this->filterForm->fill();
-        $this->dispatch('filament-kanban.reset-filter');
     }
 
     /**
