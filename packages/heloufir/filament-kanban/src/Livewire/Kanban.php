@@ -403,6 +403,8 @@ class Kanban extends Page implements HasForms
                         ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
 
                     Select::make('filters.assignees')
+                        ->native(false)
+                        ->searchable()
                         ->label(__('filament-kanban::filament-kanban.modal.form.assignees'))
                         ->options(fn() => collect($this->resources)->pluck('name', 'id')->toArray()),
 

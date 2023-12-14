@@ -1,5 +1,5 @@
 <div
-    class="kanban-col-title flex flex-row items-center gap-2 sticky top-0 bg-slate-100 dark:bg-slate-800 p-3 z-10">
+    class="kanban-col-title flex flex-row items-center gap-2 sticky top-0 bg-slate-100 dark:bg-slate-800 p-3" style="z-index: 1;">
     @if(isset($status['icon']))
         <x-filament::icon
             icon="{{$status['icon']}}"

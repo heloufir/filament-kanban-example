@@ -1,4 +1,4 @@
-<div class="w-full z-20">
+<div class="w-full" style="z-index: 2;">
     <div class="grid divide-y divide-neutral-200 w-full">
         <div>
             <details class="group bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-800 rounded-lg">
