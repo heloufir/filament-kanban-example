@@ -20,7 +20,7 @@ document.addEventListener('livewire:initialized', function () {
                 const oldIndex = evt.oldIndex;  // element's old index within old parent
                 const newIndex = evt.newIndex;  // element's new index within new parent
                 if (evt.from.dataset.draggable) {
-                    const newOrder = document.kanbanUtilities.getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).unique();
+                    const newOrder = document.kanbanUtilities.getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).unique().filter(item => item !== "3mu");
                     const data = {
                         record: parseInt(itemEl.dataset.id) === Number(itemEl.dataset.id) ? +itemEl.dataset.id : itemEl.dataset.id,
                         source: parseInt(previousList.dataset.status) === Number(previousList.dataset.status) ? +previousList.dataset.status : previousList.dataset.status,
@@ -35,7 +35,6 @@ document.addEventListener('livewire:initialized', function () {
                     } else {
                         eventName = 'filament-kanban.record-sort';
                     }
-                    console.log(data);
                     Livewire.dispatch(eventName, data);
                 }
             },

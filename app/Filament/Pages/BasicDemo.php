@@ -88,7 +88,6 @@ class BasicDemo extends Kanban
 
     public function recordSorted(array $event): void
     {
-        dd($event);
         // Show a notification
         Notification::make('sorted')
             ->success()

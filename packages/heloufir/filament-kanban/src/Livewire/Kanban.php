@@ -117,7 +117,13 @@ class Kanban extends Page implements HasForms
      */
     protected function recordIndexById(int|string $id): ?int
     {
-        return array_search($id, array_column($this->records, 'id')) ?? null;
+        $key = -1;
+        foreach ($this->records as $k => $v) {
+            if ($v['id'] === $id) {
+                $key = $k;
+            }
+        }
+        return $key;
     }
 
     /**
