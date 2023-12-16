@@ -119,7 +119,7 @@ class Kanban extends Page implements HasForms
     {
         $key = -1;
         foreach ($this->records as $k => $v) {
-            if ($v['id'] === $id) {
+            if ($v['id'] === $id || intval($id) === $v['id']) {
                 $key = $k;
             }
         }
