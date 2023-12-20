@@ -123,6 +123,9 @@ class Kanban extends Page implements HasForms
                 $key = $k;
             }
         }
+        if ($key !== -1 && $record = $this->refreshRecord($id)) {
+            $this->records[$key] = $record;
+        }
         return $key;
     }
 
@@ -463,7 +466,7 @@ class Kanban extends Page implements HasForms
     }
 
     /**
-     * Get resource name based on it's id
+     * Get resource avatar based on it's name
      * @param string $name
      * @return string
      * @author https://github.com/heloufir
@@ -474,6 +477,7 @@ class Kanban extends Page implements HasForms
     }
 
     /**
+     * Statuses setter
      * @param array $statuses
      * @return void
      * @author https://github.com/heloufir
@@ -484,6 +488,7 @@ class Kanban extends Page implements HasForms
     }
 
     /**
+     * Records setter
      * @param array $records
      * @return void
      * @author https://github.com/heloufir
@@ -494,6 +499,7 @@ class Kanban extends Page implements HasForms
     }
 
     /**
+     * Resources setter
      * @param array $resources
      * @return void
      * @author https://github.com/heloufir
@@ -613,5 +619,16 @@ class Kanban extends Page implements HasForms
     public function getRecordModalActions(): array
     {
         return [];
+    }
+
+    /**
+     * Refresh record details based on it's id
+     * @param string|int $id
+     * @return array|null
+     * @author https://github.com/heloufir
+     */
+    public function refreshRecord(string|int $id): array|null
+    {
+        return null;
     }
 }
