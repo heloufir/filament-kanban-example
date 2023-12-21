@@ -631,4 +631,19 @@ class Kanban extends Page implements HasForms
     {
         return null;
     }
+
+    /**
+     * Refresh record details based on it's id (livewire event)
+     * @param string|int $id
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    #[On('filament-kanban.refresh-record')]
+    public function refreshRecordEvent(string|int $id): void
+    {
+        // Call record index by id method
+        // it will check automatically if the refresh record
+        // method is defined and do the refresh
+        $this->recordIndexById($id);
+    }
 }
