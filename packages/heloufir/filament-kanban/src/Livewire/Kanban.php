@@ -123,9 +123,6 @@ class Kanban extends Page implements HasForms
                 $key = $k;
             }
         }
-        if ($key !== -1 && $record = $this->refreshRecord($id)) {
-            $this->records[$key] = $record;
-        }
         return $key;
     }
 
@@ -238,6 +235,7 @@ class Kanban extends Page implements HasForms
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
+            $this->refreshRecordDetails($record);
             $this->records[$index]['status'] = $target;
             $this->records[$index]['sort'] = $newIndex;
             $reorderedRecords = $this->reorderRecords($target, $newOrder);
@@ -268,6 +266,7 @@ class Kanban extends Page implements HasForms
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
+            $this->refreshRecordDetails($record);
             $this->records[$index]['sort'] = $newIndex;
             $reorderedRecords = $this->reorderRecords($target, $newOrder);
             $this->dispatch('filament-kanban.record-sorted', [
@@ -290,6 +289,7 @@ class Kanban extends Page implements HasForms
     public function recordClick(int|string $record): void
     {
         $index = $this->recordIndexById($record);
+        $this->refreshRecordDetails($record);
         if ($this->records[$index]['click'] ?? true) {
             if (static::$handleRecordClickWithModal) {
                 $this->modalMode = 'update';
@@ -645,5 +645,22 @@ class Kanban extends Page implements HasForms
         // it will check automatically if the refresh record
         // method is defined and do the refresh
         $this->recordIndexById($id);
+    }
+
+    /**
+     * Refresh record details
+     * @param string|int $id
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    private function refreshRecordDetails(string|int $id): void
+    {
+        $index = $this->recordIndexById($id);
+        $r = $this->refreshRecord($id);
+        if ($index !== -1 && $r) {
+            foreach ($this->records[$index] as $k => $v) {
+                $this->records[$index][$k] = $r[$k] ?? null;
+            }
+        }
     }
 }

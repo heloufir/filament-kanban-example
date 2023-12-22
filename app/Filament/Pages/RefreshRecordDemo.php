@@ -175,18 +175,9 @@ class RefreshRecordDemo extends Kanban
 
     public function refreshRecord(int|string $id): array|null
     {
-        $key = -1;
-        foreach ($this->records as $k => $v) {
-            if ($v['id'] === $id || intval($id) === $v['id']) {
-                $key = $k;
-            }
-        }
-        if ($key !== -1) {
-            $record = $this->records[$key];
-            $record['title'] = 'Refreshed title';
-            $record['subtitle'] = 'Refreshed subtitle';
-            return $record;
-        }
-        return null;
+        $record = collect(KanbanService::getRecords())->where('id', $id)->first();
+        $record['title'] = 'Refreshed title';
+        $record['subtitle'] = 'Refreshed subtitle';
+        return $record;
     }
 }
