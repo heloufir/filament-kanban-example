@@ -642,7 +642,9 @@ class Kanban extends Page implements HasForms
         $r = $this->refreshRecord($id);
         if ($index !== -1 && $r) {
             foreach ($this->records[$index] as $k => $v) {
-                $this->records[$index][$k] = $r[$k] ?? null;
+                if (!in_array($k, ['sort', 'status'])) {
+                    $this->records[$index][$k] = $r[$k] ?? null;
+                }
             }
         }
     }
