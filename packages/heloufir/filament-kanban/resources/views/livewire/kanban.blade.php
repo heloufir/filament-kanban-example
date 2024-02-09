@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <div
         class="flex flex-col gap-10"
-        x-data="{}"
+        x-data="{collapsedColumns: []}"
         x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-kanban', package: 'heloufir/filament-kanban'))]"
     >
 
@@ -92,6 +92,14 @@
                         .send()
                 });
             });
+
+            function toggleElementInArray(array, element) {
+                if (array.includes(element)) {
+                    array.splice(array.indexOf(element), 1);
+                } else {
+                    array.push(element);
+                }
+            }
         </script>
     @endif
 

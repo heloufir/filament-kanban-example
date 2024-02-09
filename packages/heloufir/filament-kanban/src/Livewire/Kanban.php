@@ -40,6 +40,12 @@ class Kanban extends Page implements HasForms
     protected static bool $enableCreateAction = false;
 
     /**
+     * Enable or disable the collapse function of kanban columns
+     * @var bool
+     */
+    public bool $enableCollapsibleColumns = false;
+
+    /**
      * Enable or disable kanban filters
      * @var bool
      */
