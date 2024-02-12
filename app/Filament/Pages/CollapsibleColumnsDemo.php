@@ -46,7 +46,7 @@ class CollapsibleColumnsDemo extends Kanban
                 ->color('gray')
                 ->icon('heroicon-m-code-bracket')
                 ->label('View on Github')
-                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/BasicDemo.php')
+                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/CollapsibleColumnsDemo.php')
         ], Parent::getActions());
     }
 
