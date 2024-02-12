@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <div
         class="flex flex-col gap-10"
-        x-data="{collapsedColumns: []}"
+        x-data="{collapsedColumns: @json(collect($this->statuses)->filter(fn ($item) => $item['collapsed'])->pluck('id')->toArray())}"
         x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-kanban', package: 'heloufir/filament-kanban'))]"
     >
 

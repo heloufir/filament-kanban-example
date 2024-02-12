@@ -10,10 +10,10 @@ class KanbanService
     public static function getStatuses(): array
     {
         return [
-            ['id' => 1, 'name' => 'Draft', 'color' => 'green', 'draggable' => true],
-            ['id' => 2, 'name' => 'Submitted', 'color' => 'blue', 'draggable' => false],
-            ['id' => 3, 'name' => 'Changes requested', 'color' => 'orangered', 'draggable' => true],
-            ['id' => 4, 'name' => 'Published', 'color' => 'green', 'draggable' => true],
+            ['id' => 1, 'name' => 'Draft', 'color' => 'green', 'draggable' => true, 'collapsed' => true],
+            ['id' => 2, 'name' => 'Submitted', 'color' => 'blue', 'draggable' => false, 'collapsed' => false],
+            ['id' => 3, 'name' => 'Changes requested', 'color' => 'orangered', 'draggable' => true, 'collapsed' => false],
+            ['id' => 4, 'name' => 'Published', 'color' => 'green', 'draggable' => true, 'collapsed' => false],
         ];
     }
 
