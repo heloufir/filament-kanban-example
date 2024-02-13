@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <div
         class="flex flex-col gap-10"
-        x-data="{collapsedColumns: @json(collect($this->statuses)->filter(fn ($item) => $item['collapsed'])->pluck('id')->toArray())}"
+        x-data="{collapsedColumns: @json(collect($this->statuses)->filter(fn ($item) => $item['collapsed'] ?? false)->pluck('id')->toArray())}"
         x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-kanban', package: 'heloufir/filament-kanban'))]"
     >
 
@@ -94,8 +94,9 @@
             });
 
             function toggleElementInArray(array, element) {
-                if (array.includes(element)) {
-                    array.splice(array.indexOf(element), 1);
+                const index = array.indexOf(element);
+                if (index !== -1) {
+                    array.splice(index, 1);
                 } else {
                     array.push(element);
                 }
