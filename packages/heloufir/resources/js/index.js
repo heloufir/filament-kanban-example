@@ -20,7 +20,7 @@ document.addEventListener('livewire:initialized', function () {
                 const oldIndex = evt.oldIndex;  // element's old index within old parent
                 const newIndex = evt.newIndex;  // element's new index within new parent
                 if (evt.from.dataset.draggable) {
-                    const newOrder = document.kanbanUtilities.getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).unique().filter(item => item !== "3mu");
+                    const newOrder = document.kanbanUtilities.getNewOrderOfNewStatusRecord(itemEl).concat(sortable.toArray()).filter((value, index, array) => array.indexOf(value) === index).filter(item => item !== "3mu");
                     const data = {
                         record: parseInt(itemEl.dataset.id) === Number(itemEl.dataset.id) ? +itemEl.dataset.id : itemEl.dataset.id,
                         source: parseInt(previousList.dataset.status) === Number(previousList.dataset.status) ? +previousList.dataset.status : previousList.dataset.status,
@@ -98,19 +98,3 @@ document.kanbanUtilities.selectedRecord = function () {
 
     }, 300);
 }
-
-/**
- * Remove duplicates from an array
- * @returns {*[]}
- */
-Array.prototype.unique = function() {
-    var a = this.concat();
-    for(var i=0; i<a.length; ++i) {
-        for(var j=i+1; j<a.length; ++j) {
-            if(a[i] === a[j])
-                a.splice(j--, 1);
-        }
-    }
-
-    return a;
-};
