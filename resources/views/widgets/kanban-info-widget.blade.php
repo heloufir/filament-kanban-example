@@ -12,7 +12,7 @@
                 </a>
 
                 <p class="mt-2 text-xs text-gray-700">
-                    v1.4.13
+                    v1.4.32
                     <br>
                     <a href="https://filament-kanban-docs.heloufir.dev/#/releases?id=releases" target="_blank"
                        class="hover:underline">Releases Notes</a>
