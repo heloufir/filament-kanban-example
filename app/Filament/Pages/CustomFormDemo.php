@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Core\KanbanService;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -39,6 +40,7 @@ class CustomFormDemo extends Kanban
         'owner' => null,
         'assignees' => [],
         'tags' => null,
+        'file' => null,
         'extra_1' => null,
         'extra_2' => null,
         'extra_3' => null,
@@ -223,7 +225,10 @@ class CustomFormDemo extends Kanban
 
             Toggle::make('record.extra_3')
                 ->label('Extra input 3')
-                ->visible(fn() => isset($this->record['extra_3']))
+                ->visible(fn() => isset($this->record['extra_3'])),
+
+            FileUpload::make('record.file')
+                ->label('File'),
         ]);
     }
 }
