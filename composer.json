@@ -7,6 +7,9 @@
         "framework"
     ],
     "license": "MIT",
+    "platform": {
+        "php": "8.2.26"
+    },
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.0-stable",
