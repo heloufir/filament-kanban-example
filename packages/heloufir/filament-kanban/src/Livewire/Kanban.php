@@ -101,6 +101,19 @@ class Kanban extends Page implements HasForms
     public string $modalMode;
 
     /**
+     * If set to TRUE the list view will be disabled
+     * @var bool
+     */
+    public bool $disableKanbanListView = false;
+
+    /**
+     * Selected kanban view
+     * Can be 'kanban' or 'list'
+     * @var string
+     */
+    public string $selectedKanbanView = 'kanban';
+
+    /**
      * Get records based on a status id
      * @param int|string $status
      * @return array
@@ -652,6 +665,20 @@ class Kanban extends Page implements HasForms
                     $this->records[$index][$k] = $r[$k] ?? null;
                 }
             }
+        }
+    }
+
+    /**
+     * Select a specific kanban view
+     * @param string $viewType
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function selectKanbanView(string $viewType): void
+    {
+        $this->selectedKanbanView = $viewType;
+        if ($viewType == 'kanban') {
+            $this->dispatch('filament-kanban.kanban-view-selected');
         }
     }
 }

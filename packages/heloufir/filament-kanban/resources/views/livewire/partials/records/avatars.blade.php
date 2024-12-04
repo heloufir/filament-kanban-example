@@ -1,5 +1,5 @@
 <div
-    class="kanban-cell-avatars w-full flex flex-wrap flex-row justify-end items-center gap-0.5">
+    class="kanban-cell-avatars w-full flex flex-wrap flex-row {{ isset($avatarStart) ? 'justify-start' : 'justify-end' }} items-center gap-0.5">
     @if(isset($r['owner']) && $this->getResourceName($r['owner']))
 
         @include('filament-kanban::livewire.partials.records.avatar', ['item' => $r['owner']])

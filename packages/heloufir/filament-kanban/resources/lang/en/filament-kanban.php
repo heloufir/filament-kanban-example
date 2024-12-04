@@ -68,6 +68,24 @@ return [
 
     ],
 
+    'views-buttons' => [
+
+        'kanban' => 'Kanban',
+
+        'list' => 'List',
+
+    ],
+
+    'sections' => [
+
+        'task' => 'Task name',
+
+        'assignees' => 'assignees',
+
+        'due-date' => 'Due date',
+
+    ],
+
     'record' => [
 
         'delete' => 'Delete',

@@ -9,18 +9,53 @@
             @include('filament-kanban::livewire.kanban-filters')
         @endif
 
-        <div class="kanban w-full overflow-x-hidden hover:overflow-x-auto flex flex-row gap-3"
-             @if(config('filament-kanban.kanban-height')) style="height: {{ config('filament-kanban.kanban-height') }}px;" @endif>
+        @if(!$this->disableKanbanListView)
+            @include('filament-kanban::livewire.kanban-views-buttons')
+        @endif
 
-            @foreach($this->statuses as $status)
-                @php
-                    $records = $this->recordsByStatus($status['id']);
-                @endphp
+        @if($this->selectedKanbanView == 'kanban')
+            <div class="kanban w-full overflow-x-hidden hover:overflow-x-auto flex flex-row gap-3"
+                 @if(config('filament-kanban.kanban-height')) style="height: {{ config('filament-kanban.kanban-height') }}px;" @endif>
 
-                @include('filament-kanban::livewire.partials.column')
-            @endforeach
+                @foreach($this->statuses as $status)
+                    @php
+                        $records = $this->recordsByStatus($status['id']);
+                    @endphp
 
-        </div>
+                    @include('filament-kanban::livewire.partials.column')
+                @endforeach
+
+            </div>
+        @elseif($this->selectedKanbanView == 'list')
+            <div class="kanban-list w-full flex flex-col">
+
+                <div class="w-full flex flex-row justify-start items-center gap-2 mb-2">
+                    <div class="w-2/4">
+                        <span class="kanban-section-divider text-sm font-medium text-gray-700 dark:text-gray-300">
+                            @lang('filament-kanban::filament-kanban.sections.task')
+                        </span>
+                    </div>
+                    <div class="w-1/4">
+                        <span class="kanban-section-divider text-sm font-medium text-gray-700 dark:text-gray-300">
+                            @lang('filament-kanban::filament-kanban.sections.assignees')
+                        </span>
+                    </div>
+                    <div class="w-1/4">
+                        <span class="kanban-section-divider text-sm font-medium text-gray-700 dark:text-gray-300">
+                            @lang('filament-kanban::filament-kanban.sections.due-date')
+                        </span>
+                    </div>
+                </div>
+                @foreach($this->statuses as $status)
+                    @php
+                        $records = $this->recordsByStatus($status['id']);
+                    @endphp
+
+                    @include('filament-kanban::livewire.partials.sections')
+                @endforeach
+
+            </div>
+        @endif
 
     </div>
 
@@ -74,6 +109,10 @@
             });
 
             document.addEventListener('livewire:init', () => {
+                Livewire.on('filament-kanban.kanban-view-selected', (event) => {
+                    setTimeout(() => document.kanbanUtilities.kanbanResizeHeight(), 100);
+                });
+
                 Livewire.on('filament-kanban.share-record', (event) => {
                     const id = event.id;
                     const url = "{{ url()->current() }}?selected=" + id;
