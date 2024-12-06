@@ -48,7 +48,7 @@ class KanbanListDemo extends Kanban
                 ->color('gray')
                 ->icon('heroicon-m-code-bracket')
                 ->label('View on Github')
-                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/BasicDemo.php')
+                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/KanbanListDemo.php')
         ], Parent::getActions());
     }
 
