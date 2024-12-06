@@ -25,6 +25,8 @@ class KanbanListDemo extends Kanban
 
     public string $selectedKanbanView = 'list';
 
+    public bool $disableKanbanListView = false;
+
     protected $listeners = [
         'filament-kanban.record-sorted' => 'recordSorted',
         'filament-kanban.record-dragged' => 'recordDragged',

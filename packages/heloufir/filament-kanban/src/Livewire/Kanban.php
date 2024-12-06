@@ -104,7 +104,7 @@ class Kanban extends Page implements HasForms
      * If set to TRUE the list view will be disabled
      * @var bool
      */
-    public bool $disableKanbanListView = false;
+    public bool $disableKanbanListView = true;
 
     /**
      * Selected kanban view
