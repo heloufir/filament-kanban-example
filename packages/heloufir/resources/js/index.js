@@ -14,6 +14,10 @@ document.addEventListener('livewire:initialized', function () {
             filter: ".disable-draggable",
 
             onEnd: function (evt) {
+                const componentId = document.querySelector('.fi-page').getAttribute('wire:id');
+                if (Livewire.find(componentId).get('loadingActivated')) {
+                    Livewire.find(componentId).set('loading', true);
+                }
                 const itemEl = evt.item;  // dragged HTMLElement
                 const targetList = evt.to;    // target list
                 const previousList = evt.from;  // previous list

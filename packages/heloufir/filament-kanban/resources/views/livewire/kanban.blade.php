@@ -1,9 +1,15 @@
 <x-filament-panels::page>
     <div
-        class="flex flex-col gap-10"
+        class="flex flex-col gap-10 relative"
         x-data="{collapsedColumns: @json(collect($this->statuses)->filter(fn ($item) => $item['collapsed'] ?? false)->pluck('id')->toArray())}"
         x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-kanban', package: 'heloufir/filament-kanban'))]"
     >
+
+        @if($loadingActivated && $loading)
+            <div id="kanban-loading" class="w-full h-full absolute top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-30 flex flex-row justify-center items-center z-50 rounded-lg gap-2">
+                <x-icon name="heroicon-o-arrow-path" class="w-10 h-10 text-gray-900"/> <span class="text-gray-900 text-sm font-medium">@lang('filament-kanban::filament-kanban.loading')</span>
+            </div>
+        @endif
 
         @if($this->showFilters)
             @include('filament-kanban::livewire.kanban-filters')
@@ -63,7 +69,22 @@
                        :slide-over="config('filament-kanban.record-modal.position') === 'slide-over'" sticky-header
                        width="{{ config('filament-kanban.record-modal.size') }}">
         <x-slot name="heading">
-            {{ $modalMode === 'update' ? ($record['title'] ?? '') : __('filament-kanban::filament-kanban.modal.create') }}
+            <div class="flex items-center justify-between">
+                <span>
+                    {{ $modalMode === 'update' ? ($record['title'] ?? '') : __('filament-kanban::filament-kanban.modal.create') }}
+                </span>
+                @if($modalMode === 'update')
+                    &nbsp;&nbsp;<span class="btn">
+                        <x-filament::icon-button
+                            @click="$wire.dispatch('filament-kanban.share-record', {id: '{{ $record['id'] }}'})"
+                            icon="heroicon-m-link"
+                            size="xs"
+                            color="info"
+                            label="{{ __('filament-kanban::filament-kanban.record.share.button') }}"
+                        />
+                    </span>
+                @endif
+            </div>
         </x-slot>
 
         <form wire:submit="submitRecord">
@@ -117,18 +138,35 @@
                     const id = event.id;
                     const url = "{{ url()->current() }}?selected=" + id;
 
-                    // Handle copy
-                    const textarea = document.createElement("textarea");
-                    textarea.textContent = url;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textarea);
-
-                    new FilamentNotification()
-                        .title('{{ __('filament-kanban::filament-kanban.record.share.notification.title') }}')
-                        .success()
-                        .send()
+                    // Handle copy using clipboard API since older one was not working consistently in modal
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(url).then(() => {
+                            new FilamentNotification()
+                                .title('{{ __('filament-kanban::filament-kanban.record.share.notification.title') }}')
+                                .success()
+                                .send();
+                        }).catch(err => {
+                            console.error('Failed to copy: ', err);
+                        });
+                    } else {
+                        // Fallback using older method
+                        const textarea = document.createElement("textarea");
+                        textarea.value = url;
+                        textarea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge
+                        document.body.appendChild(textarea);
+                        textarea.focus();
+                        textarea.select();
+                        try {
+                            document.execCommand("copy");
+                            new FilamentNotification()
+                                .title('{{ __('filament-kanban::filament-kanban.record.share.notification.title') }}')
+                                .success()
+                                .send();
+                        } catch (err) {
+                            console.error('Fallback: Failed to copy: ', err);
+                        }
+                        document.body.removeChild(textarea);
+                    }
                 });
             });
 

@@ -14,6 +14,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\ItemNotFoundException;
 use Livewire\Attributes\On;
 
@@ -114,6 +115,24 @@ class Kanban extends Page implements HasForms
     public string $selectedKanbanView = 'kanban';
 
     /**
+     * Dispatch automatically the sort finished event
+     * @var bool
+     */
+    public bool $dispatchSortFinishedAutomatically = true;
+
+    /**
+     * Enables loading screen
+     * @var bool
+     */
+    public bool $loadingActivated = false;
+
+    /**
+     * Loading indicator
+     * @var bool
+     */
+    public bool $loading = false;
+
+    /**
      * Get records based on a status id
      * @param int|string $status
      * @return array
@@ -155,15 +174,13 @@ class Kanban extends Page implements HasForms
     protected function reorderRecords(int|string $status, array $newOrder): array
     {
         $reorderedRecords = [];
-        $statusRecords = $this->recordsByStatus($status);
-        for ($i = 0; $i < sizeof($statusRecords); $i++) {
-            $recordIndex = $this->recordIndexById($statusRecords[$i]['id']);
+        $index = 0;
+        foreach ($newOrder as $item) {
+            $recordIndex = $this->recordIndexById($item);
             $oldSort = $this->records[$recordIndex]['sort'];
-            $newSort = array_search($this->records[$recordIndex]['id'], $newOrder);
+            $newSort = $index++;
             $this->records[$recordIndex]['sort'] = $newSort;
-            if ($oldSort !== $newSort) {
-                $reorderedRecords[] = ['record' => $this->records[$recordIndex]['id'], 'old_index' => $oldSort, 'new_index' => $newSort];
-            }
+            $reorderedRecords[] = ['record' => $this->records[$recordIndex]['id'], 'old_index' => $oldSort, 'new_index' => $newSort];
         }
         return $reorderedRecords;
     }
@@ -254,8 +271,8 @@ class Kanban extends Page implements HasForms
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
-            $this->records[$index]['status'] = $target;
-            $this->records[$index]['sort'] = $newIndex;
+            /*$this->records[$index]['status'] = $target;
+            $this->records[$index]['sort'] = $newIndex;*/
             $reorderedRecords = $this->reorderRecords($target, $newOrder);
             $this->dispatch('filament-kanban.record-dragged', [
                 'record' => $record,
@@ -265,6 +282,9 @@ class Kanban extends Page implements HasForms
                 'new_index' => $newIndex,
                 'ordered_records' => $reorderedRecords
             ]);
+            if ($this->dispatchSortFinishedAutomatically && $this->loadingActivated) {
+                $this->loading = false;
+            }
         }
     }
 
@@ -284,7 +304,7 @@ class Kanban extends Page implements HasForms
     {
         $index = $this->recordIndexById($record);
         if ($this->records[$index] ?? null) {
-            $this->records[$index]['sort'] = $newIndex;
+            /*$this->records[$index]['sort'] = $newIndex;*/
             $reorderedRecords = $this->reorderRecords($target, $newOrder);
             $this->dispatch('filament-kanban.record-sorted', [
                 'record' => $record,
@@ -294,6 +314,9 @@ class Kanban extends Page implements HasForms
                 'new_index' => $newIndex,
                 'ordered_records' => $reorderedRecords
             ]);
+            if ($this->dispatchSortFinishedAutomatically && $this->loadingActivated) {
+                $this->loading = false;
+            }
         }
     }
 
