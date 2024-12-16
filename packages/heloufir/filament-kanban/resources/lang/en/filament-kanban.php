@@ -2,6 +2,8 @@
 
 return [
 
+    'loading' => 'Loading, please wait...',
+
     'actions' => [
 
         'create' => 'Create a new record'
