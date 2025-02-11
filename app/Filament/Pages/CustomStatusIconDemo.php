@@ -21,7 +21,7 @@ class CustomStatusIconDemo extends Kanban
 
     protected static ?string $title = 'Custom Status Icon';
 
-    protected static ?string $navigationGroup = 'Demo';
+    protected static ?string $navigationGroup = 'Version 1';
 
     protected $listeners = [
         'filament-kanban.record-sorted' => 'recordSorted',

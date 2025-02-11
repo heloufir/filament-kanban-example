@@ -21,7 +21,7 @@ class RefreshRecordDemo extends Kanban
 
     protected static ?string $title = 'Refresh Record';
 
-    protected static ?string $navigationGroup = 'Demo';
+    protected static ?string $navigationGroup = 'Version 1';
 
     protected $listeners = [
         'filament-kanban.record-sorted' => 'recordSorted',

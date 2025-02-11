@@ -15,7 +15,8 @@
     "require": {
         "php": ">=8.2.0",
         "filament/filament": "^3.2",
-        "livewire/livewire": "^3.5"
+        "livewire/livewire": "^3.5",
+        "gamez/typed-collection": "^7.1"
     },
     "autoload": {
         "psr-4": {

@@ -106,4 +106,6 @@ return [
 
     ],
 
+    'empty-state' => 'No records',
+
 ];
