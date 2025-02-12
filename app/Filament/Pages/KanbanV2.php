@@ -23,6 +23,16 @@ class KanbanV2 extends KanbanBoard
 
     protected static ?string $navigationGroup = 'Version 2';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return 'NEW';
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'success';
+    }
+
     function getStatuses(): KanbanStatuses
     {
         return KanbanStatuses::make(
