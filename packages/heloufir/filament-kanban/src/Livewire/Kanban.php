@@ -14,10 +14,11 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\ItemNotFoundException;
+use JetBrains\PhpStorm\Deprecated;
 use Livewire\Attributes\On;
 
+#[Deprecated(reason: "This class will be removed in future versions, please use KanbanBoard class instead.")]
 class Kanban extends Page implements HasForms
 {
     use InteractsWithForms;

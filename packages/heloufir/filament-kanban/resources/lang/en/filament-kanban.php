@@ -6,7 +6,9 @@ return [
 
     'actions' => [
 
-        'create' => 'Create a new record'
+        'create' => 'Create a new record',
+
+        'more' => 'More actions'
 
     ],
 
@@ -64,7 +66,7 @@ return [
 
             'submit' => 'Filter',
 
-            'reset' => 'Reset filters',
+            'reset' => 'Reset filters'
 
         ],
 
@@ -105,5 +107,7 @@ return [
         ],
 
     ],
+
+    'empty-state' => 'No records',
 
 ];

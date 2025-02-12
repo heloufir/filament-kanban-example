@@ -4,7 +4,7 @@ return [
 
     'kanban-height' => null,
 
-    'deadline-format' => 'j M.',
+    'deadline-format' => 'j M. Y',
 
     'record-modal' => [
 

@@ -26,7 +26,7 @@ class CustomFormDemo extends Kanban
 
     protected static ?string $title = 'Custom Form';
 
-    protected static ?string $navigationGroup = 'Demo';
+    protected static ?string $navigationGroup = 'Version 1';
 
     public array $record = [
         'id' => null,

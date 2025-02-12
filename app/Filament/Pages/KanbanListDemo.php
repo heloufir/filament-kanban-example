@@ -21,7 +21,7 @@ class KanbanListDemo extends Kanban
 
     protected static ?string $title = 'List View';
 
-    protected static ?string $navigationGroup = 'Demo';
+    protected static ?string $navigationGroup = 'Version 1';
 
     public string $selectedKanbanView = 'list';
 
