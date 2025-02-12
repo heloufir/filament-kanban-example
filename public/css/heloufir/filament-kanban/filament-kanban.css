@@ -2524,6 +2524,11 @@
   color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgba(var(--gray-800), var(--tw-text-opacity))
+}
+
 .underline {
   text-decoration-line: underline
 }

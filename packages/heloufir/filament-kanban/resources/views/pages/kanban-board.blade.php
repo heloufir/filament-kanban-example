@@ -68,7 +68,8 @@
                         document.querySelectorAll('[x-ref^="sortable-"]').forEach(el => {
                             Sortable.create(el, {
                                 group: 'kanban',
-                                animation: 150,
+                                animation: 200,
+                                filter: ".no-drag",
                                 ghostClass: 'bg-gray-300',
                                 onEnd: event => {
                                     this.updateOrder(event);

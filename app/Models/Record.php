@@ -45,7 +45,6 @@ class Record extends Model implements KanbanRecordModel
     {
         return KanbanRecord::make()
             ->deletable(true)
-            ->draggable(true)
             ->sortable(true)
             ->editable(true)
             ->viewable(true)

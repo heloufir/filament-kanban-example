@@ -20,7 +20,6 @@ class KanbanRecord implements Arrayable
     protected ?string $description = null;
     protected ?float $progress = null;
     protected int $sort = 0;
-    protected bool $draggable = false;
     protected bool $viewable = false;
     protected bool $editable = false;
     protected bool $sortable = false;
@@ -164,18 +163,6 @@ class KanbanRecord implements Arrayable
         return $this;
     }
 
-    function isDraggable(): ?bool
-    {
-        return $this->draggable;
-    }
-
-    function draggable(?bool $draggable): static
-    {
-        $this->draggable = $draggable;
-
-        return $this;
-    }
-
     function isEditable(): ?bool
     {
         return $this->editable;
@@ -250,7 +237,6 @@ class KanbanRecord implements Arrayable
             'description' => $this->description,
             'progress' => $this->progress,
             'sort' => $this->sort,
-            'draggable' => $this->draggable,
             'editable' => $this->editable,
             'viewable' => $this->viewable,
             'sortable' => $this->sortable,
