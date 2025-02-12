@@ -9,11 +9,10 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components;
 use Heloufir\FilamentKanban\Filament\KanbanBoard;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Infolists\Components;
-use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
 class KanbanV2 extends KanbanBoard
@@ -128,7 +127,7 @@ class KanbanV2 extends KanbanBoard
                         ->date(config('filament-kanban.deadline-format')),
 
                     Components\TextEntry::make('progress')
-                        ->formatStateUsing(fn ($state) => $state . '%'),
+                        ->formatStateUsing(fn($state) => $state . '%'),
                 ]),
         ];
     }
