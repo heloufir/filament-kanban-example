@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Record;
 use App\Models\Status;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
@@ -145,6 +146,12 @@ class KanbanV2 extends KanbanBoard
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('docs')
+                ->label('Documentation')
+                ->color('gray')
+                ->outlined()
+                ->icon('heroicon-o-code-bracket')
+                ->url('https://filament-kanban-docs-v2.heloufir.dev/', true),
             $this->addAction()
         ];
     }

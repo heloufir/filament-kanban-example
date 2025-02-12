@@ -1,21 +1,12 @@
 <x-filament-widgets::widget class="fi-filament-info-widget">
-    <x-filament::section style="background: rgb(254,251,222); background: linear-gradient(90deg, rgba(254,251,222,1) 0%, rgba(255,220,252,1) 100%);">
+    <x-filament::section style="background: rgb(255,255,255); background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(207,220,249,1) 100%);">
         <div class="flex items-center gap-x-3">
             <div class="flex-1">
-                <a
-                    href="https://filament-kanban-docs.heloufir.dev"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    class="font-bold italic text-gray-700"
-                >
-                    Filament Kanban
-                </a>
-
-                <p class="mt-2 text-xs text-gray-700">
-                    v1.5.2
+                <p class="text-gray-700">
+                    <span class="text-xl font-bold">v2.0.0</span>
                     <br>
                     <a href="https://filament-kanban-docs.heloufir.dev/#/releases?id=releases" target="_blank"
-                       class="hover:underline">Releases Notes</a>
+                       class="hover:underline text-xs">Releases Notes</a>
                 </p>
             </div>
 
@@ -75,6 +66,18 @@
 
                     <span class="text-gray-700 hover:underline">Purchase the plugin</span>
                 </x-filament::link>
+
+                <div class="w-full flex flex-row justify-start items-center gap-2">
+                    <x-filament::badge color="success">NEW</x-filament::badge>
+                    <x-filament::link
+                        color="gray"
+                        :href="\App\Filament\Pages\KanbanV2::getUrl()"
+                        icon-alias="panels::widgets.filament-info.open-github-button"
+                        rel="noopener noreferrer"
+                    >
+                        <span class="text-gray-700 hover:underline">V2 Demo & Docs</span>
+                    </x-filament::link>
+                </div>
             </div>
         </div>
     </x-filament::section>
