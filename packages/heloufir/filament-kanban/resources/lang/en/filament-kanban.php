@@ -8,10 +8,6 @@ return [
 
         'create' => 'Create a new record',
 
-        'edit' => 'Edit',
-
-        'delete' => 'Delete',
-
     ],
 
     'modal' => [
@@ -111,7 +107,5 @@ return [
     ],
 
     'empty-state' => 'No records',
-
-    'deadline-date-format' => 'Y-m-d',
 
 ];

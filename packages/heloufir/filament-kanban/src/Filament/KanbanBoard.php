@@ -8,6 +8,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Pages\Page;
 use Filament\Support\Enums\ActionSize;
 use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
@@ -27,6 +28,8 @@ abstract class KanbanBoard extends Page implements HasActions
     {
         $this->perPage = $this->getModel()->getPerPage();
     }
+
+    abstract function recordInfolist(): array;
 
     abstract function recordForm(): array;
 
@@ -63,10 +66,19 @@ abstract class KanbanBoard extends Page implements HasActions
         return EditAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
             ->size(ActionSize::ExtraSmall)
-            ->label(__('filament-kanban::filament-kanban.actions.edit'))
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
             ->form(fn() => $this->recordForm());
+    }
+
+    protected function viewAction(): Action
+    {
+        return ViewAction::make()
+            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
+            ->size(ActionSize::ExtraSmall)
+            ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
+            ->modalWidth(config('filament-kanban.record-modal.size'))
+            ->infolist(fn () => $this->recordInfolist());
     }
 
     protected function addAction(): Action
@@ -82,8 +94,7 @@ abstract class KanbanBoard extends Page implements HasActions
     {
         return DeleteAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->size(ActionSize::ExtraSmall)
-            ->label(__('filament-kanban::filament-kanban.actions.delete'));
+            ->size(ActionSize::ExtraSmall);
     }
 
 }

@@ -1,6 +1,11 @@
 <div class="relative group hover:cursor-pointer w-full text-sm rounded-lg hover:shadow flex flex-col gap-2 bg-white p-3 dark:bg-gray-500/20 border dark:border-white/10">
     <div class="absolute w-full top-0 left-0 right-0 p-2 group-hover:flex hidden gap-1 items-center justify-end bg-gray-100 dark:bg-gray-700/70 bg-opacity-70">
-        {{ ($this->editAction)(['record' => $record->getId()]) }}
+        @if($record->isViewable())
+            {{ ($this->viewAction)(['record' => $record->getId()]) }}
+        @endif
+        @if($record->isDeletable())
+            {{ ($this->editAction)(['record' => $record->getId()]) }}
+        @endif
         @if($record->isDeletable())
             {{ ($this->deleteAction)(['record' => $record->getId()]) }}
         @endif
@@ -14,7 +19,7 @@
     @endif
     <div class="w-full grid grid-cols-12 items-center gap-3">
         @if($record->getDeadline())
-            <span class="col-span-4 text-center rounded text-xs bg-gray-100 py-1 px-2 dark:bg-gray-500/20">{{ $record->getDeadline()->format(__('filament-kanban::filament-kanban.deadline-date-format')) }}</span>
+            <span class="col-span-4 text-center rounded text-xs bg-gray-100 py-1 px-2 dark:bg-gray-500/20">{{ $record->getDeadline()->format(config('filament-kanban.deadline-format')) }}</span>
         @endif
         @if($record->getProgress() !== null)
             <div class="col-span-8 grid grid-cols-12 items-center gap-2">

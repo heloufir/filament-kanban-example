@@ -47,6 +47,7 @@ class Record extends Model implements KanbanRecordModel
             ->draggable(true)
             ->sortable(true)
             ->editable(true)
+            ->viewable(true)
             ->id($this->id)
             ->title($this->title)
             ->description($this->description)

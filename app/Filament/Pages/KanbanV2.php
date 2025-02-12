@@ -12,6 +12,9 @@ use Filament\Forms\Components\TextInput;
 use Heloufir\FilamentKanban\Filament\KanbanBoard;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class KanbanV2 extends KanbanBoard
 {
@@ -83,6 +86,49 @@ class KanbanV2 extends KanbanBoard
                         ->numeric()
                         ->minValue(0)
                         ->maxValue(100),
+                ]),
+        ];
+    }
+
+    function recordInfolist(): array
+    {
+        return [
+            Components\Grid::make(3)
+                ->schema([
+                    Components\TextEntry::make('status.title'),
+
+                    Components\TextEntry::make('title')
+                        ->columnSpan(2),
+                ]),
+
+            Components\Grid::make(3)
+                ->schema([
+                    Components\TextEntry::make('owner.name'),
+
+                    Components\TextEntry::make('assignees')
+                        ->columnSpan(2)
+                        ->formatStateUsing(function (Record $record) {
+                            $html = '<ul>';
+                            foreach ($record->assignees as $assignee) {
+                                $html .= '<li>' . $assignee->name . '</li>';
+                            }
+                            $html .= '</ul>';
+                            return new HtmlString($html);
+                        })
+                ]),
+
+            Components\TextEntry::make('description')
+                ->columnSpanFull()
+                ->html()
+                ->extraAttributes(['class' => 'prose']),
+
+            Components\Grid::make()
+                ->schema([
+                    Components\TextEntry::make('deadline')
+                        ->date(config('filament-kanban.deadline-format')),
+
+                    Components\TextEntry::make('progress')
+                        ->formatStateUsing(fn ($state) => $state . '%'),
                 ]),
         ];
     }
