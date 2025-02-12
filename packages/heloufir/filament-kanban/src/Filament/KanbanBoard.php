@@ -2,9 +2,14 @@
 
 namespace Heloufir\FilamentKanban\Filament;
 
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Pages\Page;
+use Filament\Support\Enums\ActionSize;
 use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +27,8 @@ abstract class KanbanBoard extends Page implements HasActions
     {
         $this->perPage = $this->getModel()->getPerPage();
     }
+
+    abstract function recordForm(): array;
 
     abstract function getStatuses(): KanbanStatuses;
 
@@ -42,15 +49,41 @@ abstract class KanbanBoard extends Page implements HasActions
     protected function getRecords(): KanbanRecords
     {
         return KanbanRecords::make(
-            $this->getQuery()
-                ->get()
-                ->map(fn($item) => $item->toRecord())
+            $this->getQuery()->get()
         );
     }
 
     protected function getColumnWidth(): string
     {
         return '350px';
+    }
+
+    protected function editAction(): Action
+    {
+        return EditAction::make()
+            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
+            ->size(ActionSize::ExtraSmall)
+            ->label(__('filament-kanban::filament-kanban.actions.edit'))
+            ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
+            ->modalWidth(config('filament-kanban.record-modal.size'))
+            ->form(fn() => $this->recordForm());
+    }
+
+    protected function addAction(): Action
+    {
+        return CreateAction::make()
+            ->model(fn() => $this->model())
+            ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
+            ->modalWidth(config('filament-kanban.record-modal.size'))
+            ->form(fn() => $this->recordForm());
+    }
+
+    protected function deleteAction(): Action
+    {
+        return DeleteAction::make()
+            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
+            ->size(ActionSize::ExtraSmall)
+            ->label(__('filament-kanban::filament-kanban.actions.delete'));
     }
 
 }

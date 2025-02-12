@@ -6,7 +6,11 @@ return [
 
     'actions' => [
 
-        'create' => 'Create a new record'
+        'create' => 'Create a new record',
+
+        'edit' => 'Edit',
+
+        'delete' => 'Delete',
 
     ],
 
@@ -107,5 +111,7 @@ return [
     ],
 
     'empty-state' => 'No records',
+
+    'deadline-date-format' => 'Y-m-d',
 
 ];

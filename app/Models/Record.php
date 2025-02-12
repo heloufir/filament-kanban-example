@@ -8,7 +8,6 @@ use Heloufir\FilamentKanban\ValueObjects\KanbanResources;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Record extends Model implements KanbanRecordModel
 {
@@ -19,6 +18,7 @@ class Record extends Model implements KanbanRecordModel
         'deadline',
         'owner_id',
         'status_id',
+        'progress',
     ];
 
     protected $casts = [
@@ -43,13 +43,18 @@ class Record extends Model implements KanbanRecordModel
     function toRecord(): KanbanRecord
     {
         return KanbanRecord::make()
+            ->deletable(true)
+            ->draggable(true)
+            ->sortable(true)
+            ->editable(true)
             ->id($this->id)
             ->title($this->title)
             ->description($this->description)
             ->deadline($this->deadline)
+            ->progress($this->progress)
             ->assignees(
                 KanbanResources::make(
-                    $this->assignees->map(fn(User $assignee) => $assignee->toResource())
+                    $this->assignees
                 )
             )
             ->status($this->status->toStatus());

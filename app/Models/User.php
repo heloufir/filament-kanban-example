@@ -62,6 +62,7 @@ class User extends Authenticatable implements FilamentUser, KanbanResourceModel
     {
         return KanbanResource::make()
             ->id($this->id)
-            ->name($this->name);
+            ->name($this->name)
+            ->avatar('https://ui-avatars.com/api/?name=' . $this->name . 'D&color=FFFFFF&background=09090b');
     }
 }

@@ -3,8 +3,9 @@
 namespace Heloufir\FilamentKanban\ValueObjects;
 
 use Gamez\Illuminate\Support\TypedCollection;
+use Heloufir\FilamentKanban\Interfaces\KanbanStatusModel;
 
 class KanbanStatuses extends TypedCollection
 {
-    protected static $allowedTypes = [KanbanStatus::class];
+    protected static $allowedTypes = [KanbanStatusModel::class];
 }

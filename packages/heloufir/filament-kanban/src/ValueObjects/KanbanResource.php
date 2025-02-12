@@ -9,6 +9,7 @@ class KanbanResource implements Arrayable
 
     protected string|int $id;
     protected string $name;
+    protected string $avatar;
 
     static function make(): static
     {
@@ -39,11 +40,24 @@ class KanbanResource implements Arrayable
         return $this->name;
     }
 
+    function avatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
     function toArray()
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'avatar' => $this->avatar,
         ];
     }
 }
