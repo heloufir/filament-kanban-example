@@ -1,14 +1,20 @@
-<div class="relative group hover:cursor-pointer w-full text-sm rounded-lg hover:shadow flex flex-col gap-2 bg-white p-3 dark:bg-gray-500/20 border dark:border-white/10">
-    <div class="absolute w-full top-0 left-0 right-0 p-2 group-hover:flex hidden gap-1 items-center justify-end bg-gray-100 dark:bg-gray-700/70 bg-opacity-70">
-        @if($record->isViewable())
-            {{ ($this->viewAction)(['record' => $record->getId()]) }}
-        @endif
-        @if($record->isDeletable())
-            {{ ($this->editAction)(['record' => $record->getId()]) }}
-        @endif
-        @if($record->isDeletable())
-            {{ ($this->deleteAction)(['record' => $record->getId()]) }}
-        @endif
+<div
+    data-id="{{ $record->getId() }}"
+    data-status-id="{{ $record->getStatus()->getId() }}"
+    class="relative group hover:cursor-pointer w-full text-sm rounded-lg hover:shadow flex flex-col gap-2 bg-white p-3 dark:bg-gray-500/20 border dark:border-white/10">
+    <div class="absolute top-2 right-2 group-hover:flex hidden w-8 h-8 bg-gray-100 dark:bg-gray-500/20 items-center justify-center text-center hover:shadow rounded-lg">
+        <x-filament-actions::group
+            label="Actions"
+            icon="heroicon-m-ellipsis-vertical"
+            color="gray"
+            size="md"
+            :tooltip="__('filament-kanban::filament-kanban.actions.more')"
+            dropdown-placement="bottom-start"
+            :actions="[
+            ($this->viewAction)(['record' => $record->getId()]),
+            ($this->editAction)(['record' => $record->getId()]),
+            ($this->deleteAction)(['record' => $record->getId()]),
+        ]" />
     </div>
     @if($record->getSubtitle())
         <span class="text-xs opacity-70">{{ $record->getSubtitle() }}</span>

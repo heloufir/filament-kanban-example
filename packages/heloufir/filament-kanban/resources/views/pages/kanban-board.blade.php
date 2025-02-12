@@ -7,7 +7,7 @@
 
 <x-filament-panels::page>
     <div class="w-full"
-         x-data="{}"
+         x-data="kanbanBoard()"
          x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-kanban', package: 'heloufir/filament-kanban'))]"
     >
 
@@ -37,13 +37,14 @@
                          style="height: calc(100vh - 300px);">
                         @foreach($statuses as $status)
                             <div
-                                class="flex flex-col"
+                                x-ref="sortable-{{ $status->getId() }}"
+                                data-status-id="{{ $status->getId() }}"
+                                wire:key="sortable-{{ $status->getId() }}"
+                                class="flex flex-col gap-5 mt-3"
                                 style="width: {{ $columnWidth }}; min-width: {{ $columnWidth }};">
-                                <div class="w-full flex flex-col gap-5 mt-3">
-                                    @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
-                                        @include('filament-kanban::pages.partials.record')
-                                    @endforeach
-                                </div>
+                                @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
+                                    @include('filament-kanban::pages.partials.record')
+                                @endforeach
                             </div>
                         @endforeach
                     </div>
@@ -54,5 +55,47 @@
         </div>
 
     </div>
+
+    @push('scripts')
+        <script>
+            function kanbanBoard() {
+                return {
+                    init() {
+                        this.initSortable();
+                    },
+
+                    initSortable() {
+                        document.querySelectorAll('[x-ref^="sortable-"]').forEach(el => {
+                            Sortable.create(el, {
+                                group: 'kanban',
+                                animation: 150,
+                                ghostClass: 'bg-gray-300',
+                                onEnd: event => {
+                                    this.updateOrder(event);
+                                }
+                            });
+                        });
+                    },
+
+                    updateOrder(event) {
+
+                        const columnStart = +event.from.getAttribute('data-status-id');
+                        const columnEnd = +event.to.getAttribute('data-status-id');
+                        const item = +event.item.getAttribute('data-id');
+                        const oldIndex = +event.oldIndex;
+                        const newIndex = +event.newIndex;
+
+                        Livewire.dispatch('kanban.drag', {
+                            id: item,
+                            statusFrom: columnStart,
+                            statusTo: columnEnd,
+                            oldSort: oldIndex,
+                            newSort: newIndex
+                        });
+                    }
+                }
+            }
+        </script>
+    @endpush
 
 </x-filament-panels::page>

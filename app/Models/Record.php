@@ -19,6 +19,7 @@ class Record extends Model implements KanbanRecordModel
         'owner_id',
         'status_id',
         'progress',
+        'sort',
     ];
 
     protected $casts = [
@@ -59,5 +60,15 @@ class Record extends Model implements KanbanRecordModel
                 )
             )
             ->status($this->status->toStatus());
+    }
+
+    function statusColumn(): string
+    {
+        return 'status_id';
+    }
+
+    function sortColumn(): string
+    {
+        return 'sort';
     }
 }

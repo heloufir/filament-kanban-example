@@ -8,6 +8,8 @@ return [
 
         'create' => 'Create a new record',
 
+        'more' => 'More actions'
+
     ],
 
     'modal' => [
@@ -64,7 +66,7 @@ return [
 
             'submit' => 'Filter',
 
-            'reset' => 'Reset filters',
+            'reset' => 'Reset filters'
 
         ],
 
