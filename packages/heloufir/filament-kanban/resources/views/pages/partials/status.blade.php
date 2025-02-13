@@ -1,6 +1,6 @@
 <div
     class="flex flex-col"
-    style="width: {{ $columnWidth }}; min-width: {{ $columnWidth }};">
+    style="width: {{ (isset($fullWidth) && $fullWidth) ? '100%' : $columnWidth }}; min-width: {{ (isset($fullWidth) && $fullWidth) ? '100%' : $columnWidth }};">
     <div class="w-full flex items-center gap-1 p-3 rounded-lg border dark:border-white/10 @if(!$status->getColor()) bg-white dark:bg-gray-500/20 @endif"
          @if($status->getColor()) style="background-color: {{ $status->getColor() }};" @endif>
         @if($status->getIcon())

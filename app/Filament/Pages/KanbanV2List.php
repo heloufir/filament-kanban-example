@@ -17,15 +17,19 @@ use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 
-class KanbanV2 extends KanbanBoard
+class KanbanV2List extends KanbanBoard
 {
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
 
-    protected static ?string $slug = 'v2/board';
+    protected static ?string $slug = 'v2/list';
 
     protected static ?string $navigationGroup = 'Version 2';
 
-    protected static ?string $title = 'Kanban Board';
+    protected static ?string $title = 'Kanban List';
+
+    protected bool $showViewTabs = true;
+
+    protected KanbanView $currentView = KanbanView::LIST;
 
     public static function getNavigationBadge(): ?string
     {

@@ -110,4 +110,12 @@ return [
 
     'empty-state' => 'No records',
 
+    'views' => [
+
+        'board' => 'Board',
+
+        'list' => 'List',
+
+    ],
+
 ];

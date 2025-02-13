@@ -12,6 +12,15 @@ return [
 
         'position' => 'slide-over'
 
-    ]
+    ],
 
+    'views' => [
+
+        'icons' => [
+            'position' => 'before',
+            'board' => 'heroicon-o-rectangle-group',
+            'list' => 'heroicon-o-list-bullet',
+        ],
+
+    ],
 ];

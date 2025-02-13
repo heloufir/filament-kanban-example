@@ -11,6 +11,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Pages\Page;
 use Filament\Support\Enums\ActionSize;
+use Heloufir\FilamentKanban\enums\KanbanView;
 use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,35 +23,95 @@ abstract class KanbanBoard extends Page implements HasActions
 {
     use InteractsWithActions;
 
+    /**
+     * @var string The view that will be rendered.
+     */
     protected static string $view = 'filament-kanban::pages.kanban-board';
 
-    public int $perPage;
+    /**
+     * @var KanbanView The current view.
+     */
+    protected KanbanView $currentView = KanbanView::BOARD;
 
-    public function mount(): void
-    {
-        $this->perPage = $this->getModel()->getPerPage();
-    }
+    /**
+     * @var array The views that will be visible in Kanban page.
+     */
+    protected array $enabledViews = [
+        KanbanView::BOARD,
+        KanbanView::LIST,
+    ];
 
+    /**
+     * @var bool Whether the view tabs should be shown or not.
+     */
+    protected bool $showViewTabs = false;
+
+    /**
+     * @var bool Whether the current tab should be persisted on Cookies or not.
+     */
+    protected bool $persistCurrentTab = false;
+
+    /**
+     * Record Filament infolist schema.
+     * @return array
+     * @author https://github.com/heloufir
+     */
     abstract function recordInfolist(): array;
 
+    /**
+     * Record Filament form schema.
+     * @return array
+     * @author https://github.com/heloufir
+     */
     abstract function recordForm(): array;
 
+    /**
+     * Getting statuses for the Kanban board.
+     * @return KanbanStatuses
+     * @author https://github.com/heloufir
+     */
     abstract function getStatuses(): KanbanStatuses;
 
+    /**
+     * Record model class.
+     * @return string
+     * @author https://github.com/heloufir
+     */
     abstract function model(): string;
 
+    /**
+     * Query builder used for getting records.
+     * @param Builder $query Query builder
+     * @return Builder
+     * @author https://github.com/heloufir
+     */
     abstract function query(Builder $query): Builder;
 
+    /**
+     * Getting the record model object.
+     * @return Model
+     * @author https://github.com/heloufir
+     */
     protected function getModel(): Model
     {
         return new ($this->model());
     }
 
+    /**
+     * Getting the query builder for record model object.
+     * @return Builder
+     * @author https://github.com/heloufir
+     */
     protected function getQuery(): Builder
     {
         return $this->query($this->getModel()->newQuery());
     }
 
+    /**
+     * Getting the records list
+     * @return KanbanRecords
+     * @author https://github.com/heloufir
+     */
     protected function getRecords(): KanbanRecords
     {
         return KanbanRecords::make(
@@ -60,33 +121,53 @@ abstract class KanbanBoard extends Page implements HasActions
         );
     }
 
+    /**
+     * Kanban board column width.
+     * @return string
+     * @author https://github.com/heloufir
+     */
     protected function getColumnWidth(): string
     {
         return '350px';
     }
 
+    /**
+     * Record Filament edit action.
+     * @return Action
+     * @author https://github.com/heloufir
+     */
     protected function editAction(): Action
     {
         return EditAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn ($record) => $record->toRecord()->isEditable())
+            ->visible(fn($record) => $record->toRecord()->isEditable())
             ->size(ActionSize::ExtraSmall)
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
             ->form(fn() => $this->recordForm());
     }
 
+    /**
+     * Record Filament view action.
+     * @return Action
+     * @author https://github.com/heloufir
+     */
     protected function viewAction(): Action
     {
         return ViewAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn ($record) => $record->toRecord()->isViewable())
+            ->visible(fn($record) => $record->toRecord()->isViewable())
             ->size(ActionSize::ExtraSmall)
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
-            ->infolist(fn () => $this->recordInfolist());
+            ->infolist(fn() => $this->recordInfolist());
     }
 
+    /**
+     * Record Filament create action.
+     * @return Action
+     * @author https://github.com/heloufir
+     */
     protected function addAction(): Action
     {
         return CreateAction::make()
@@ -102,14 +183,29 @@ abstract class KanbanBoard extends Page implements HasActions
             });
     }
 
+    /**
+     * Record Filament delete action.
+     * @return Action
+     * @author https://github.com/heloufir
+     */
     protected function deleteAction(): Action
     {
         return DeleteAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn ($record) => $record->toRecord()->isDeletable())
+            ->visible(fn($record) => $record->toRecord()->isDeletable())
             ->size(ActionSize::ExtraSmall);
     }
 
+    /**
+     * Event listener for dragging and sorting records.
+     * @param int $id Record ID
+     * @param int $statusFrom Status ID from which the record is dragged/sorted
+     * @param int $statusTo Status ID to which the record is dragged/sorted
+     * @param int $oldSort Old sort value
+     * @param int $newSort New sort value
+     * @return void
+     * @author https://github.com/heloufir
+     */
     #[On('kanban.drag')]
     public function onDragEnd(int $id, int $statusFrom, int $statusTo, int $oldSort, int $newSort)
     {
