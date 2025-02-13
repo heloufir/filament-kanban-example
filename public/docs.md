@@ -1,4 +1,4 @@
-![Filament Kanban](https://gist.github.com/assets/6197875/64c6d400-6d05-4898-ab74-5760399f5fcb)
+![Filament Kanban](https://filament-kanban.heloufir.dev/filament-kanban.png)
 
 # Filament Kanban
 
