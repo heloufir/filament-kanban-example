@@ -16,6 +16,7 @@ use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 
@@ -50,6 +51,19 @@ abstract class KanbanBoard extends Page implements HasActions
      * @var bool Whether the current tab should be persisted on Cookies or not.
      */
     protected bool $persistCurrentTab = false;
+
+    /**
+     * Mounting the Kanban board.
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    public function mount(): void
+    {
+        if ($this->persistCurrentTab) {
+            $cookieValue = strtolower(Cookie::get('filament-kanban-view') ?? $this->currentView->name);
+            $this->currentView = KanbanView::tryFrom($cookieValue);
+        }
+    }
 
     /**
      * Record Filament infolist schema.
@@ -246,6 +260,20 @@ abstract class KanbanBoard extends Page implements HasActions
             $record->{$sortColumn} = $newSort;
             $record->save();
         });
+    }
+
+    /**
+     * Event listener for changing the current Kanban view.
+     * @param string $active The active view
+     * @return void
+     * @author https://github.com/heloufir
+     */
+    #[On('kanban.change-view')]
+    public function onChangeView(string $active)
+    {
+        if ($this->persistCurrentTab) {
+            Cookie::queue(Cookie::make('filament-kanban-view', $active, 60 * 24 * 365));
+        }
     }
 
 

@@ -31,6 +31,8 @@ class KanbanV2List extends KanbanBoard
 
     protected KanbanView $currentView = KanbanView::LIST;
 
+    protected bool $persistCurrentTab = true;
+
     public static function getNavigationBadge(): ?string
     {
         return 'NEW';

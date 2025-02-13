@@ -54,6 +54,7 @@
 
                     setActiveTab(tab) {
                         this.activeTab = tab;
+                        Livewire.dispatch('kanban.change-view', { active: tab });
                     },
 
                     initSortable() {
