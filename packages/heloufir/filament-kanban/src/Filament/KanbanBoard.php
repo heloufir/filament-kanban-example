@@ -212,7 +212,7 @@ abstract class KanbanBoard extends Page implements HasActions
 
     /**
      * Event listener for dragging and sorting records.
-     * @param int $id Record ID
+     * @param string|int $id Record ID
      * @param int $statusFrom Status ID from which the record is dragged/sorted
      * @param int $statusTo Status ID to which the record is dragged/sorted
      * @param int $oldSort Old sort value
@@ -221,7 +221,7 @@ abstract class KanbanBoard extends Page implements HasActions
      * @author https://github.com/heloufir
      */
     #[On('kanban.drag')]
-    public function onDragEnd(int $id, int $statusFrom, int $statusTo, int $oldSort, int $newSort)
+    public function onDragEnd(string|int $id, int $statusFrom, int $statusTo, int $oldSort, int $newSort)
     {
         DB::transaction(function () use ($id, $statusFrom, $statusTo, $oldSort, $newSort) {
             $statusColumn = $this->getModel()->statusColumn();
