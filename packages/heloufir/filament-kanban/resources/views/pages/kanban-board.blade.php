@@ -7,6 +7,7 @@
     'currentView' => $this->currentView,
     'showViewTabs' => $this->showViewTabs,
     'persistCurrentTab' => $this->persistCurrentTab,
+    'showStatusesAsTabs' => $this->showStatusesAsTabs,
 ])
 
 <x-filament-panels::page>
@@ -47,6 +48,7 @@
             function kanbanBoard() {
                 return {
                     activeTab: '{{ $currentView }}',
+                    activeStatusTab: '{{ $statuses->first()?->getId() }}',
 
                     init() {
                         this.initSortable();
@@ -55,6 +57,10 @@
                     setActiveTab(tab) {
                         this.activeTab = tab;
                         Livewire.dispatch('kanban.change-view', { active: tab });
+                    },
+
+                    setStatusActiveTab(status) {
+                        this.activeStatusTab = status;
                     },
 
                     initSortable() {

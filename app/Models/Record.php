@@ -43,7 +43,7 @@ class Record extends Model implements KanbanRecordModel
 
     function toRecord(): KanbanRecord
     {
-        return KanbanRecord::make()
+        return KanbanRecord::make($this)
             ->deletable(true)
             ->sortable(true)
             ->editable(true)
@@ -53,6 +53,7 @@ class Record extends Model implements KanbanRecordModel
             ->description($this->description)
             ->deadline($this->deadline)
             ->progress($this->progress)
+            ->tags(['Filament', 'Kanban', 'Plugin'])
             ->assignees(
                 KanbanResources::make(
                     $this->assignees

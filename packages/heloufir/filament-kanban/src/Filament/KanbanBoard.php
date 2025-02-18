@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 
 abstract class KanbanBoard extends Page implements HasActions
@@ -54,6 +55,11 @@ abstract class KanbanBoard extends Page implements HasActions
     protected bool $persistCurrentTab = false;
 
     /**
+     * @var bool Whether the statuses should be shown as tabs or not. (works only in List view)
+     */
+    protected bool $showStatusesAsTabs = false;
+
+    /**
      * Mounting the Kanban board.
      * @return void
      * @author https://github.com/heloufir
@@ -61,7 +67,7 @@ abstract class KanbanBoard extends Page implements HasActions
     public function mount(): void
     {
         if ($this->persistCurrentTab) {
-            $cookieValue = strtolower(Cookie::get('filament-kanban-view') ?? $this->currentView->name);
+            $cookieValue = strtolower(Cookie::get('filament-kanban-view-' . Str::slug(self::getSlug())) ?? $this->currentView->name);
             $this->currentView = KanbanView::tryFrom($cookieValue);
         }
     }
@@ -295,7 +301,7 @@ abstract class KanbanBoard extends Page implements HasActions
     public function onChangeView(string $active)
     {
         if ($this->persistCurrentTab) {
-            Cookie::queue(Cookie::make('filament-kanban-view', $active, 60 * 24 * 365));
+            Cookie::queue(Cookie::make('filament-kanban-view-' . Str::slug(self::getSlug()), $active, 60 * 24 * 365));
         }
     }
 

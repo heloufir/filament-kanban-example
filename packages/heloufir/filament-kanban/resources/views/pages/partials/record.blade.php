@@ -38,4 +38,13 @@
             @endif
         </div>
     @endif
+    @if($record->getTags())
+        <div class="w-full flex flex-row items-center gap-1 flex-wrap">
+            @foreach($record->getTags() as $tag)
+                <x-filament::badge color="gray">
+                    {{ $tag }}
+                </x-filament::badge>
+            @endforeach
+        </div>
+    @endif
 </div>

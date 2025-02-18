@@ -217,6 +217,10 @@
   grid-column: var(--col-span-default)
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1
+}
+
 .col-span-10 {
   grid-column: span 10 / span 10
 }
@@ -235,10 +239,6 @@
 
 .col-span-full {
   grid-column: 1 / -1
-}
-
-.col-span-1 {
-  grid-column: span 1 / span 1
 }
 
 .col-start-2 {
@@ -1264,8 +1264,8 @@
   grid-template-columns: repeat(12, minmax(0, 1fr))
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr))
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr))
 }
 
 .grid-cols-7 {
@@ -1286,14 +1286,6 @@
 
 .grid-cols-\[repeat\(auto-fit\2c minmax\(0\2c 1fr\)\)\] {
   grid-template-columns: repeat(auto-fit,minmax(0,1fr))
-}
-
-.grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr))
-}
-
-.grid-cols-6 {
-  grid-template-columns: repeat(6, minmax(0, 1fr))
 }
 
 .grid-rows-\[1fr_auto_1fr\] {
@@ -2164,6 +2156,10 @@
   padding-bottom: 2rem
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem
+}
+
 .pb-12 {
   padding-bottom: 3rem
 }
@@ -2262,10 +2258,6 @@
 
 .pt-8 {
   padding-top: 2rem
-}
-
-.pb-10 {
-  padding-bottom: 2.5rem
 }
 
 .text-left {

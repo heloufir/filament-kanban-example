@@ -2,11 +2,28 @@
     data-id="{{ $record->getId() }}"
     data-status-id="{{ $record->getStatus()->getId() }}"
     class="relative group hover:cursor-pointer w-full text-sm rounded-lg hover:shadow grid grid-cols-6 items-center gap-2 bg-white p-3 dark:bg-gray-500/20 border dark:border-white/10 @if(!$record->isSortable()) no-drag @endif">
-    <div class="col-span-2">
+    <div class="col-span-2 flex flex-col gap-1">
         @if($record->getSubtitle())
             <span class="text-xs opacity-70">{{ $record->getSubtitle() }}</span>
         @endif
         <span class="text-base">{{ $record->getTitle() }}</span>
+        @if($record->getProgress() !== null)
+            <div class="grid grid-cols-12 items-center gap-2">
+                <div class="col-span-10 rounded h-2 bg-gray-100 dark:bg-gray-500/20">
+                    <div class="h-2 bg-green-500 dark:bg-green-700 rounded" style="width: {{ $record->getProgress() }}%;"></div>
+                </div>
+                <span class="col-span-2 text-xs">{{ $record->getProgress() }}%</span>
+            </div>
+        @endif
+        @if($record->getTags())
+            <div class="w-full flex flex-row items-center gap-1 flex-wrap">
+                @foreach($record->getTags() as $tag)
+                    <x-filament::badge color="gray">
+                        {{ $tag }}
+                    </x-filament::badge>
+                @endforeach
+            </div>
+        @endif
     </div>
     <div class="col-span-2">
         @if($record->getAssignees() && $record->getAssignees()->isNotEmpty())

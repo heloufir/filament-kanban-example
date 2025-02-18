@@ -21,15 +21,19 @@
                 @endforeach
             </div>
 
-            <div class="w-fit flex gap-5 overflow-y-auto overflow-x-hidden items-stretch">
+            @php($columnHeight = 230)
+            @php($maxStatusesCount = 0)
+            <div class="relative flex gap-5 overflow-auto" style="height: calc(100vh - 350px); width: calc(({{ $columnWidth }} * {{ $statuses->count() }}) + ({{ $statuses->count() - 1 }} * 1.25rem));">
                 @foreach($statuses as $status)
+                    @php($statusRecords = $records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()))
+                    @php($maxStatusesCount = max($maxStatusesCount, $statusRecords->count()))
                     <div
                         x-ref="sortable-{{ $status->getId() }}"
                         data-status-id="{{ $status->getId() }}"
                         wire:key="sortable-{{ $status->getId() }}"
-                        class="flex flex-col gap-5 mt-3"
-                        style="width: {{ $columnWidth }}; min-width: {{ $columnWidth }};">
-                        @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
+                        class="flex flex-col gap-5 mt-3 absolute top-0 bottom-0"
+                        style="width: {{ $columnWidth }}; min-width: {{ $columnWidth }}; left: calc(({{ $loop->index }} * {{ $columnWidth }}) + ({{ $loop->index }} * 1.25rem)); height: calc({{ $maxStatusesCount }} * {{ $columnHeight }}px);">
+                        @foreach($statusRecords as $record)
                             @include('filament-kanban::pages.partials.record')
                         @endforeach
                     </div>

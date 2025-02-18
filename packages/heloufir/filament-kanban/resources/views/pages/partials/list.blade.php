@@ -14,25 +14,58 @@
         </x-filament::section>
     @else
 
-        <div class="w-full flex flex-col gap-3">
+        @if($showStatusesAsTabs)
             <div class="w-full flex flex-col gap-5">
-                @foreach($statuses as $status)
-                    <div class="w-full flex flex-col gap-5 @if(!$loop->last) pb-10 mb-5 border-b border-gray-300 dark:border-gray-700 @endif">
-                        @include('filament-kanban::pages.partials.status', ['fullWidth' => true])
+                <x-filament::tabs class="w-full">
 
-                        <div
-                            x-ref="sortable-{{ $status->getId() }}"
-                            data-status-id="{{ $status->getId() }}"
-                            wire:key="sortable-{{ $status->getId() }}"
-                            class="flex flex-col gap-5">
-                            @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
-                                @include('filament-kanban::pages.partials.record-list')
-                            @endforeach
-                        </div>
+                    @foreach($statuses as $status)
+                        <x-filament::tabs.item
+                            :icon="$status->getIcon()"
+                            alpine-active="activeStatusTab === '{{ $status->getId() }}'"
+                            x-on:click="setStatusActiveTab('{{ $status->getId() }}')"
+                        >
+                            {{ $status->getTitle() }}
+                        </x-filament::tabs.item>
+                    @endforeach
+
+                </x-filament::tabs>
+
+                @foreach($statuses as $status)
+                    <div
+                        x-show="activeStatusTab === '{{ $status->getId() }}'"
+                        x-ref="sortable-{{ $status->getId() }}"
+                        data-status-id="{{ $status->getId() }}"
+                        wire:key="sortable-{{ $status->getId() }}"
+                        class="flex flex-col gap-5">
+                        @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
+                            @include('filament-kanban::pages.partials.record-list')
+                        @endforeach
                     </div>
                 @endforeach
             </div>
-        </div>
+        @else
+
+            <div class="w-full flex flex-col gap-3">
+                <div class="w-full flex flex-col gap-5">
+                    @foreach($statuses as $status)
+                        <div class="w-full flex flex-col gap-5 @if(!$loop->last) pb-10 mb-5 border-b border-gray-300 dark:border-gray-700 @endif">
+                            @include('filament-kanban::pages.partials.status', ['fullWidth' => true])
+
+                            <div
+                                x-ref="sortable-{{ $status->getId() }}"
+                                data-status-id="{{ $status->getId() }}"
+                                wire:key="sortable-{{ $status->getId() }}"
+                                class="flex flex-col gap-5">
+                                @foreach($records->filter(fn ($record) => $record->getStatus()->getId() === $status->getId()) as $record)
+                                    @include('filament-kanban::pages.partials.record-list')
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+        @endif
 
     @endif
 
