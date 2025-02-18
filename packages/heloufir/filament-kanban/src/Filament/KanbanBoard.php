@@ -6,11 +6,12 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\ActionSize;
+use Filament\Support\Facades\FilamentIcon;
 use Heloufir\FilamentKanban\enums\KanbanView;
 use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
@@ -153,8 +154,7 @@ abstract class KanbanBoard extends Page implements HasActions
     protected function editAction(): Action
     {
         return EditAction::make()
-            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn($record) => $record->toRecord()->isEditable())
+            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record'][$this->getModel()->getKeyName()]))
             ->size(ActionSize::ExtraSmall)
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
@@ -169,8 +169,7 @@ abstract class KanbanBoard extends Page implements HasActions
     protected function viewAction(): Action
     {
         return ViewAction::make()
-            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn($record) => $record->toRecord()->isViewable())
+            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record'][$this->getModel()->getKeyName()]))
             ->size(ActionSize::ExtraSmall)
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
@@ -213,9 +212,24 @@ abstract class KanbanBoard extends Page implements HasActions
      */
     protected function deleteAction(): Action
     {
-        return DeleteAction::make()
-            ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record']))
-            ->visible(fn($record) => $record->toRecord()->isDeletable())
+        return Action::make('delete')
+            ->action(function (array $arguments) {
+                $record = $this->getQuery()->find($arguments['record'][$this->getModel()->getKeyName()]);
+                $record->delete();
+                Notification::make('deleted')
+                    ->success()
+                    ->title(__('filament-kanban::filament-kanban.actions.deleted'))
+                    ->send();
+            })
+            ->label(__('filament-actions::delete.single.label'))
+            ->modalHeading(fn(array $arguments): string => __('filament-actions::delete.single.modal.heading', ['label' => $arguments['recordTitle']]))
+            ->modalSubmitActionLabel(__('filament-actions::delete.single.modal.actions.delete.label'))
+            ->successNotificationTitle(__('filament-actions::delete.single.notifications.deleted.title'))
+            ->color('danger')
+            ->groupedIcon(FilamentIcon::resolve('actions::delete-action.grouped') ?? 'heroicon-m-trash')
+            ->requiresConfirmation()
+            ->modalIcon(FilamentIcon::resolve('actions::delete-action.modal') ?? 'heroicon-o-trash')
+            ->keyBindings(['mod+d'])
             ->size(ActionSize::ExtraSmall);
     }
 

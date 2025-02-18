@@ -4,11 +4,13 @@ namespace Heloufir\FilamentKanban\ValueObjects;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class KanbanRecord implements Arrayable
 {
 
+    protected Model $model;
     protected string|int $id;
     protected string $title;
     protected KanbanStatus $status;
@@ -26,9 +28,26 @@ class KanbanRecord implements Arrayable
     protected bool $deletable = false;
     protected ?string $color = null;
 
-    static function make(): static
+    public function __construct(Model $model)
     {
-        return new static();
+        $this->model = $model;
+    }
+
+    static function make(Model $model): static
+    {
+        return new static($model);
+    }
+
+    function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    function model(Model $model): static
+    {
+        $this->model = $model;
+
+        return $this;
     }
 
     function getId(): int|string

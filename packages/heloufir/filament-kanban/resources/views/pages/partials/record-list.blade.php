@@ -29,20 +29,7 @@
     </div>
     <div class="flex items-center justify-end col-span-1">
         <div class="flex w-8 h-8 bg-gray-100 dark:bg-gray-500/20 items-center justify-center text-center hover:shadow rounded-lg">
-            @if($record->isEditable() || $record->isDeletable() || $record->isViewable())
-                <x-filament-actions::group
-                    label="Actions"
-                    icon="heroicon-m-ellipsis-vertical"
-                    color="gray"
-                    size="md"
-                    :tooltip="__('filament-kanban::filament-kanban.actions.more')"
-                    dropdown-placement="bottom-start"
-                    :actions="[
-                ($this->viewAction)(['record' => $record->getId()]),
-                ($this->editAction)(['record' => $record->getId()]),
-                ($this->deleteAction)(['record' => $record->getId()]),
-            ]" />
-            @endif
+            @include('filament-kanban::pages.partials.record-actions')
         </div>
     </div>
 </div>

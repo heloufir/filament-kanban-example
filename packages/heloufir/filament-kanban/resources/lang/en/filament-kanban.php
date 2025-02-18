@@ -8,7 +8,9 @@ return [
 
         'create' => 'Create a new record',
 
-        'more' => 'More actions'
+        'more' => 'More actions',
+
+        'deleted' => 'Deleted'
 
     ],
 
