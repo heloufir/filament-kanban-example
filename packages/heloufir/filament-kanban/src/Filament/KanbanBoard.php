@@ -189,12 +189,21 @@ abstract class KanbanBoard extends Page implements HasActions
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
             ->form(fn() => $this->recordForm())
-            ->mutateFormDataUsing(function (array $data) {
-                $statusColumn = $this->getModel()->statusColumn();
-                $sortColumn = $this->getModel()->sortColumn();
-                $data[$sortColumn] = $this->getQuery()->where($statusColumn, $data[$statusColumn])->max($sortColumn) + 1;
-                return $data;
-            });
+            ->mutateFormDataUsing(fn(array $data) => $this->mutateFormDataAfterAddAction($data));
+    }
+
+    /**
+     * Mutate form data after adding a new record.
+     * @param array $data
+     * @return array
+     * @author https://github.com/heloufir
+     */
+    protected function mutateFormDataAfterAddAction(array $data): array
+    {
+        $statusColumn = $this->getModel()->statusColumn();
+        $sortColumn = $this->getModel()->sortColumn();
+        $data[$sortColumn] = $this->getQuery()->where($statusColumn, $data[$statusColumn])->max($sortColumn) + 1;
+        return $data;
     }
 
     /**
@@ -221,7 +230,7 @@ abstract class KanbanBoard extends Page implements HasActions
      * @author https://github.com/heloufir
      */
     #[On('kanban.drag')]
-    public function onDragEnd(string|int $id, int $statusFrom, int $statusTo, int $oldSort, int $newSort)
+    public function onDragEnd(string|int $id, string|int $statusFrom, string|int $statusTo, int $oldSort, int $newSort)
     {
         DB::transaction(function () use ($id, $statusFrom, $statusTo, $oldSort, $newSort) {
             $statusColumn = $this->getModel()->statusColumn();

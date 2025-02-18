@@ -73,9 +73,9 @@
 
                     updateOrder(event) {
 
-                        const columnStart = +event.from.getAttribute('data-status-id');
-                        const columnEnd = +event.to.getAttribute('data-status-id');
-                        const item = +event.item.getAttribute('data-id');
+                        const columnStart = event.from.getAttribute('data-status-id');
+                        const columnEnd = event.to.getAttribute('data-status-id');
+                        const item = event.item.getAttribute('data-id');
                         const oldIndex = +event.oldIndex;
                         const newIndex = +event.newIndex;
 

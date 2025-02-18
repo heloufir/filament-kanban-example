@@ -21,8 +21,7 @@
                 @endforeach
             </div>
 
-            <div class="w-fit flex gap-5 overflow-y-auto overflow-x-hidden"
-                 style="height: calc(100vh - 300px);">
+            <div class="w-fit flex gap-5 overflow-y-auto overflow-x-hidden items-stretch">
                 @foreach($statuses as $status)
                     <div
                         x-ref="sortable-{{ $status->getId() }}"
