@@ -2,7 +2,7 @@
     data-id="{{ $record->getId() }}"
     data-status-id="{{ $record->getStatus()->getId() }}"
     class="relative group hover:cursor-pointer w-full text-sm rounded-lg hover:shadow flex flex-col gap-2 bg-white p-3 dark:bg-gray-500/20 border dark:border-white/10 @if(!$record->isSortable()) no-drag @endif">
-    @include('filament-kanban::pages.partials.record-actions')
+    @include('filament-kanban::pages.partials.record-actions', ['classes' => 'absolute top-2 right-2 group-hover:flex hidden w-8 h-8 bg-gray-100 dark:bg-gray-500/20 items-center justify-center text-center hover:shadow rounded-lg'])
 
     @if($record->getSubtitle())
         <span class="text-xs opacity-70">{{ $record->getSubtitle() }}</span>
