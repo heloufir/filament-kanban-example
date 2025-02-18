@@ -19,7 +19,7 @@ use Illuminate\Support\HtmlString;
 
 class KanbanV2 extends KanbanBoard
 {
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     protected static ?string $slug = 'v2/board';
 
@@ -149,11 +149,16 @@ class KanbanV2 extends KanbanBoard
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('source')
+                ->color('gray')
+                ->icon('heroicon-m-code-bracket')
+                ->label('View on Github')
+                ->url('https://github.com/heloufir/filament-kanban-demo/blob/main/KanbanV2.php', true),
             Action::make('docs')
                 ->label('Documentation')
                 ->color('gray')
                 ->outlined()
-                ->icon('heroicon-o-code-bracket')
+                ->icon('heroicon-o-document')
                 ->url('https://filament-kanban-docs-v2.heloufir.dev/', true),
             $this->addAction()
         ];

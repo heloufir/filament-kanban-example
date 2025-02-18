@@ -8,6 +8,7 @@
     'showViewTabs' => $this->showViewTabs,
     'persistCurrentTab' => $this->persistCurrentTab,
     'showStatusesAsTabs' => $this->showStatusesAsTabs,
+    'table' => $this->table,
 ])
 
 <x-filament-panels::page>
@@ -40,6 +41,9 @@
 
         {{--LIST VIEW--}}
         @include('filament-kanban::pages.partials.list')
+
+        {{--TABLE VIEW--}}
+        @include('filament-kanban::pages.partials.table')
 
     </div>
 

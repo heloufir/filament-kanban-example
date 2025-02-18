@@ -18,8 +18,9 @@ return [
 
         'icons' => [
             'position' => 'before',
-            'board' => 'heroicon-o-rectangle-group',
+            'board' => 'heroicon-o-view-columns',
             'list' => 'heroicon-o-list-bullet',
+            'table' => 'heroicon-o-table-cells',
         ],
 
     ],

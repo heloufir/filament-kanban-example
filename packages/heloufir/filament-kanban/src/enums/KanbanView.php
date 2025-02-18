@@ -12,6 +12,8 @@ enum KanbanView: string implements HasLabel, HasIcon
 
     case LIST = 'list';
 
+    case TABLE = 'table';
+
     public function getLabel(): ?string
     {
         return __('filament-kanban::filament-kanban.views.' . $this->value);

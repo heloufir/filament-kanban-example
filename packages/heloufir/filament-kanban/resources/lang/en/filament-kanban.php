@@ -118,6 +118,8 @@ return [
 
         'list' => 'List',
 
+        'table' => 'Table',
+
     ],
 
 ];
