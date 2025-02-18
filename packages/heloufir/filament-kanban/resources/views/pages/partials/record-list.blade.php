@@ -29,7 +29,7 @@
     </div>
     <div class="flex items-center justify-end col-span-1">
         <div class="flex w-8 h-8 bg-gray-100 dark:bg-gray-500/20 items-center justify-center text-center hover:shadow rounded-lg">
-            @include('filament-kanban::pages.partials.record-actions', ['classes' => ''])
+            @include('filament-kanban::pages.partials.record-actions')
         </div>
     </div>
 </div>

@@ -11,7 +11,6 @@
         @php($actions[] = ($this->deleteAction)($options))
     @endif
     <x-filament-actions::group
-        class="{{ $classes }}"
         label="Actions"
         icon="heroicon-m-ellipsis-vertical"
         color="gray"
