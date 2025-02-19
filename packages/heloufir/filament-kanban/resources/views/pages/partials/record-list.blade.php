@@ -8,19 +8,12 @@
         @endif
         <span class="text-base">{{ $record->getTitle() }}</span>
         @if($record->getProgress() !== null)
-            <div class="grid grid-cols-12 items-center gap-2">
-                <div class="col-span-10 rounded h-2 bg-gray-100 dark:bg-gray-500/20">
-                    <div class="h-2 bg-green-500 dark:bg-green-700 rounded" style="width: {{ $record->getProgress() }}%;"></div>
-                </div>
-                <span class="col-span-2 text-xs">{{ $record->getProgress() }}%</span>
-            </div>
+            @include('filament-kanban::pages.partials.record-progress')
         @endif
         @if($record->getTags())
             <div class="w-full flex flex-row items-center gap-1 flex-wrap">
                 @foreach($record->getTags() as $tag)
-                    <x-filament::badge color="gray">
-                        {{ $tag }}
-                    </x-filament::badge>
+                    @include('filament-kanban::pages.partials.record-tag')
                 @endforeach
             </div>
         @endif
@@ -28,14 +21,7 @@
     <div class="col-span-2">
         @if($record->getAssignees() && $record->getAssignees()->isNotEmpty())
             <div class="w-full flex flex-row items-center justify-start pl-3">
-                @php($recordAssigneesTake = 5)
-                @php($recordAssignees = $record->getAssignees()->take($recordAssigneesTake)->map(fn (\Heloufir\FilamentKanban\Interfaces\KanbanResourceModel $item) => $item->toResource()))
-                @foreach($recordAssignees as $recordAssignee)
-                    <img src="{{ $recordAssignee->getAvatar() }}" class="border-2 border-gray-100 dark:border-gray-700 w-10 h-10 -ml-3 rounded-full" title="{{ $recordAssignee->getName() }}" alt="{{ $recordAssignee->getName() }}" />
-                @endforeach
-                @if($recordAssignees->count() > $recordAssigneesTake)
-                    <span class="text-xs ml-2">+{{ $recordAssignees->count() - $recordAssigneesTake }}</span>
-                @endif
+                @include('filament-kanban::pages.partials.record-assignees')
             </div>
         @endif
     </div>

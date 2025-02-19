@@ -1,5 +1,6 @@
 <div class="w-full flex flex-row justify-start items-start gap-5 overflow-x-auto pb-5"
-     x-show="activeTab === '{{ \Heloufir\FilamentKanban\enums\KanbanView::LIST }}'">
+     x-show="activeTab === '{{ \Heloufir\FilamentKanban\enums\KanbanView::LIST }}'"
+     wire:key="kanban-list-view">
 
     @if($statuses->isEmpty())
         <x-filament::section class="w-full">

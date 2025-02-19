@@ -20,7 +20,6 @@ return [
             'position' => 'before',
             'board' => 'heroicon-o-view-columns',
             'list' => 'heroicon-o-list-bullet',
-            'table' => 'heroicon-o-table-cells',
         ],
 
     ],

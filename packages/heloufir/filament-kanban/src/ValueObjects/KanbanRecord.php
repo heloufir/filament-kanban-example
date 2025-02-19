@@ -4,21 +4,21 @@ namespace Heloufir\FilamentKanban\ValueObjects;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class KanbanRecord implements Arrayable
 {
 
     protected Model $model;
     protected string|int $id;
-    protected string $title;
+    protected Htmlable|string $title;
     protected KanbanStatus $status;
     protected KanbanResource $owner;
     protected ?KanbanResources $assignees = null;
     protected ?Carbon $deadline = null;
     protected ?array $tags = null;
-    protected ?string $subtitle = null;
+    protected Htmlable|string|null $subtitle = null;
     protected ?string $description = null;
     protected ?float $progress = null;
     protected int $sort = 0;
@@ -64,10 +64,10 @@ class KanbanRecord implements Arrayable
 
     function getTitle(): string
     {
-        return $this->title;
+        return $this->title instanceof Htmlable ? $this->title->toHtml() : $this->title;
     }
 
-    function title(string $title): static
+    function title(Htmlable|string $title): static
     {
         $this->title = $title;
 
@@ -136,10 +136,10 @@ class KanbanRecord implements Arrayable
 
     function getSubtitle(): ?string
     {
-        return $this->subtitle;
+        return $this->subtitle instanceof Htmlable ? $this->subtitle->toHtml() : $this->subtitle;
     }
 
-    function subtitle(?string $subtitle): static
+    function subtitle(Htmlable|string|null $subtitle): static
     {
         $this->subtitle = $subtitle;
 

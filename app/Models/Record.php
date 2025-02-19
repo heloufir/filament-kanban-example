@@ -8,6 +8,7 @@ use Heloufir\FilamentKanban\ValueObjects\KanbanResources;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\HtmlString;
 
 class Record extends Model implements KanbanRecordModel
 {
@@ -50,9 +51,10 @@ class Record extends Model implements KanbanRecordModel
             ->viewable(true)
             ->id($this->id)
             ->title($this->title)
+            ->subtitle('#' . $this->id)
             ->description($this->description)
-            ->deadline($this->deadline)
             ->progress($this->progress)
+            ->deadline($this->deadline)
             ->tags(['Filament', 'Kanban', 'Plugin'])
             ->assignees(
                 KanbanResources::make(

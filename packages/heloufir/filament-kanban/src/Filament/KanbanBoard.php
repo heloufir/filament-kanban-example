@@ -8,14 +8,12 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\ActionSize;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Table;
 use Heloufir\FilamentKanban\enums\KanbanView;
 use Heloufir\FilamentKanban\ValueObjects\KanbanRecords;
 use Heloufir\FilamentKanban\ValueObjects\KanbanStatuses;
@@ -25,11 +23,10 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
-use Filament\Tables\Actions as TableActions;
 
-abstract class KanbanBoard extends Page implements HasActions, HasTable
+abstract class KanbanBoard extends Page implements HasForms, HasActions
 {
-    use InteractsWithTable;
+    use InteractsWithForms;
     use InteractsWithActions;
 
     /**
@@ -48,7 +45,6 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     protected array $enabledViews = [
         KanbanView::BOARD,
         KanbanView::LIST,
-        KanbanView::TABLE,
     ];
 
     /**
@@ -175,20 +171,6 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     }
 
     /**
-     * Record Table Filament edit action.
-     * @return TableActions\Action
-     * @author https://github.com/heloufir
-     */
-    protected function editTableAction(): TableActions\Action
-    {
-        return TableActions\EditAction::make()
-            ->size(ActionSize::ExtraSmall)
-            ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
-            ->modalWidth(config('filament-kanban.record-modal.size'))
-            ->form(fn() => $this->recordForm());
-    }
-
-    /**
      * Record Filament view action.
      * @return Action
      * @author https://github.com/heloufir
@@ -197,20 +179,6 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     {
         return ViewAction::make()
             ->record(fn(array $arguments) => $this->getQuery()->find($arguments['record'][$this->getModel()->getKeyName()]))
-            ->size(ActionSize::ExtraSmall)
-            ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
-            ->modalWidth(config('filament-kanban.record-modal.size'))
-            ->infolist(fn() => $this->recordInfolist());
-    }
-
-    /**
-     * Record Table Filament view action.
-     * @return TableActions\Action
-     * @author https://github.com/heloufir
-     */
-    protected function viewTableAction(): TableActions\Action
-    {
-        return TableActions\ViewAction::make()
             ->size(ActionSize::ExtraSmall)
             ->slideOver(config('filament-kanban.record-modal.position') === 'slide-over')
             ->modalWidth(config('filament-kanban.record-modal.size'))
@@ -275,16 +243,6 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     }
 
     /**
-     * Record Table Filament delete action.
-     * @return TableActions\Action
-     * @author https://github.com/heloufir
-     */
-    protected function deleteTableAction(): TableActions\Action
-    {
-        return TableActions\DeleteAction::make();
-    }
-
-    /**
      * Event listener for dragging and sorting records.
      * @param string|int $id Record ID
      * @param int $statusFrom Status ID from which the record is dragged/sorted
@@ -337,80 +295,17 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     }
 
     /**
-     * Table definition
-     * @param Table $table
-     * @return Table
-     * @author https://github.com/heloufir
-     */
-    public function table(Table $table): Table
-    {
-        return $table
-            ->query(fn() => $this->getQuery())
-            ->columns($this->tableColumns())
-            ->filters($this->filters(), $this->tableFiltersLayout())
-            ->actions($this->tableActions())
-            ->bulkActions($this->tableBulkActions())
-            ->persistFiltersInSession($this->tableShouldPersistFilters());
-    }
-
-    /**
-     * Table columns definition
+     * Record actions
      * @return array
      * @author https://github.com/heloufir
      */
-    protected function tableColumns(): array
+    public function recordActions(): array
     {
-        return [];
-    }
-
-    /**
-     * Table filters definition
-     * @return array
-     * @author https://github.com/heloufir
-     */
-    protected function filters(): array
-    {
-        return [];
-    }
-
-    /**
-     * Table actions definition
-     * @return array
-     * @author https://github.com/heloufir
-     */
-    protected function tableActions(): array
-    {
-        return [];
-    }
-
-    /**
-     * Table filters layout definition
-     * @return FiltersLayout
-     * @author https://github.com/heloufir
-     */
-    protected function tableFiltersLayout(): FiltersLayout
-    {
-        return FiltersLayout::Dropdown;
-    }
-
-    /**
-     * Table should persist filters in session
-     * @return bool
-     * @author https://github.com/heloufir
-     */
-    protected function tableShouldPersistFilters(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Table bulk actions definition
-     * @return array
-     * @author https://github.com/heloufir
-     */
-    protected function tableBulkActions(): array
-    {
-        return [];
+        return [
+            $this->viewAction(),
+            $this->editAction(),
+            $this->deleteAction(),
+        ];
     }
 
     /**
@@ -422,6 +317,7 @@ abstract class KanbanBoard extends Page implements HasActions, HasTable
     #[On('kanban.change-view')]
     public function onChangeView(string $active)
     {
+        $this->currentView = KanbanView::tryFrom($active);
         if ($this->persistCurrentTab) {
             Cookie::queue(Cookie::make('filament-kanban-view-' . Str::slug(self::getSlug()), $active, 60 * 24 * 365));
         }

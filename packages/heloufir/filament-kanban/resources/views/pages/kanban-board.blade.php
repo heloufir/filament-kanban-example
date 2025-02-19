@@ -8,7 +8,7 @@
     'showViewTabs' => $this->showViewTabs,
     'persistCurrentTab' => $this->persistCurrentTab,
     'showStatusesAsTabs' => $this->showStatusesAsTabs,
-    'table' => $this->table,
+    'recordActions' => $this->recordActions(),
 ])
 
 <x-filament-panels::page>
@@ -42,10 +42,9 @@
         {{--LIST VIEW--}}
         @include('filament-kanban::pages.partials.list')
 
-        {{--TABLE VIEW--}}
-        @include('filament-kanban::pages.partials.table')
-
     </div>
+
+    <x-filament-actions::modals />
 
     @push('scripts')
         <script>
@@ -93,8 +92,8 @@
                             id: item,
                             statusFrom: columnStart,
                             statusTo: columnEnd,
-                            oldSort: oldIndex,
-                            newSort: newIndex
+                            oldSort: oldIndex + 1,
+                            newSort: newIndex + 1
                         });
                     }
                 }
