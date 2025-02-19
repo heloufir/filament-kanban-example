@@ -271,29 +271,4 @@ class KanbanV2Views extends KanbanBoard
     {
         return false;
     }
-
-    public function recordActions(): array
-    {
-        return array_merge(
-            parent::recordActions(),
-            [
-                $this->extraAction(),
-            ]
-        );
-    }
-
-    public function extraAction(): Action
-    {
-        return Action::make('extra')
-            ->label('Extra')
-            ->color('warning')
-            ->icon('heroicon-o-plus')
-            ->form([
-                //...
-            ])
-            ->action(function (array $data, array $arguments) {
-                // Access $data to get form state
-                // Access $arguments['record'] to get your model
-            });
-    }
 }
