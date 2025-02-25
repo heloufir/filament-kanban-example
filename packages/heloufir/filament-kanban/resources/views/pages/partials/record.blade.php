@@ -19,17 +19,19 @@
             @include('filament-kanban::pages.partials.record-progress')
         @endif
     </div>
-    @if($record->getAssignees() && $record->getAssignees()->isNotEmpty())
-        <div class="grid grid-cols-12 items-center gap-2 pt-2 mt-2 border-t border-gray-200 dark:border-white/10">
+    <div class="grid grid-cols-12 items-center gap-2 pt-2 mt-2 border-t border-gray-200 dark:border-white/10">
+        @if($record->getAssignees() && $record->getAssignees()->isNotEmpty())
             <div class="col-span-8 flex flex-row items-center justify-start pl-3">
                 @include('filament-kanban::pages.partials.record-assignees')
             </div>
-            @if($record->getDeadline())
-                <span
-                    class="col-span-4 text-center rounded text-xs bg-gray-100 py-1 px-2 dark:bg-gray-500/20">{{ $record->getDeadline()->format(config('filament-kanban.deadline-format')) }}</span>
-            @endif
-        </div>
-    @endif
+        @else
+            <div class="col-span-8"></div>
+        @endif
+        @if($record->getDeadline())
+            <span
+                class="col-span-4 text-center rounded text-xs bg-gray-100 py-1 px-2 dark:bg-gray-500/20">{{ $record->getDeadline()->format(config('filament-kanban.deadline-format')) }}</span>
+        @endif
+    </div>
     @if($record->getTags())
         <div class="w-full flex flex-row items-center gap-1 flex-wrap">
             @foreach($record->getTags() as $tag)
