@@ -1,6 +1,6 @@
 ## Filament Kanban Plugin - Example Project
 
-- Online Demo: http://localhost:4321/documentation/get-started/
+- Online Demo: https://filament-kanban.heloufir.dev/
 - Documentation: http://filament-kanban-docs-v2.heloufir.dev/
 - Purchase the plugin: https://checkout.anystack.sh/filament-kanban
 
