@@ -30,3 +30,4 @@ You can see it in action here: https://filament-kanban.heloufir.dev
 >
 > Email address: john.doe@gmail.com
 > Password: secret
+
