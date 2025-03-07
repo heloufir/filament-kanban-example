@@ -160,6 +160,7 @@ class KanbanV2Filters extends KanbanBoard
     protected function getHeaderActions(): array
     {
         return [
+            $this->filterAction(),
             Action::make('source')
                 ->color('gray')
                 ->icon('heroicon-m-code-bracket')
@@ -193,5 +194,12 @@ class KanbanV2Filters extends KanbanBoard
                         ->placeholder('Deadline'),
                 ]),
         ];
+    }
+
+    public function filterAction(): Action
+    {
+        return parent::filterAction()
+            ->color('warning')
+            ->hiddenLabel();
     }
 }
